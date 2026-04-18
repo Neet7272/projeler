@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a; /* slate-900 */
+  --muted: rgba(15, 23, 42, 0.62);
+  --hairline: rgba(15, 23, 42, 0.12);
+  --surface: rgba(15, 23, 42, 0.03);
+  --primary: #2563eb; /* blue-600 */
+  --primary-foreground: #ffffff;
+  --ring: rgba(37, 99, 235, 0.35);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Phase 6 pivot: light theme is default. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: rgba(37, 99, 235, 0.18);
+}
+
+.prose-custom {
+  letter-spacing: -0.01em;
+}
+
+.prose-custom p:first-of-type::first-letter {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: var(--foreground);
+}

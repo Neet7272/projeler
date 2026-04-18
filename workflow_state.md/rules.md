@@ -1,30 +1,32 @@
-Act as a strict Lead Security Engineer and Design Director. Your task is to initialize the `rules.md` file for the "Ar-Ge İnovasyon ve Girişimcilik Kulübü" web platform project.
+## Workflow & Memory Rules (Non‑Negotiable)
+- **ALWAYS** read `project_config.md/Project Constitution`, `workflow_state.md/log.md`, `workflow_state.md/plan.md`, and `workflow_state.md/state.md` before starting work in a new session.
+- **ALWAYS** keep `workflow_state.md/log.md` and `workflow_state.md/state.md` updated after meaningful changes (code, config, deps, scripts).
+- **NEVER** jump ahead to a later Phase. If Phase \(N\) is not working, do not start Phase \(N+1\).
+- **ALWAYS** ask for approval before running commands that:
+  - install new dependencies
+  - create or modify many files (project scaffolding, migrations)
+  - alter security/auth/db choices
 
-Do not write code. Output ONLY the complete markdown content for the `rules.md` file.
+## UI/UX & Frontend Standards (CRITICAL)
+- **Aesthetic**: premium, minimalist, modern. Strong hierarchy, generous whitespace, strict spacing scale.
+- **Tailwind discipline**:
+  - Prefer composable utility patterns; avoid chaotic class soups.
+  - Keep consistent tokens (spacing, colors, radius).
+- **Motion (Framer Motion)**:
+  - **ONLY** subtle transitions: fade, small translate, slight scale.
+  - **NEVER** use bouncy/springy “playful” motion for core UI.
+  - Respect `prefers-reduced-motion` for accessibility.
+- **Responsiveness**: mobile-first; no broken layouts at common breakpoints.
+- **Typography**: clean and readable; avoid novelty fonts.
 
-# PURPOSE OF THIS FILE:
-In our autonomous AI coding workflow, `rules.md` serves as the absolute "Constitution" for the AI Agent. These rules are non-negotiable constraints regarding coding standards, UI/UX aesthetics, and system security. The AI must reference these rules constantly.
+## Backend & Security Rules
+- **Zero Trust**: Validate all inputs server-side with **Zod**.
+- **RBAC**: Admin-only routes protected in **middleware** and enforced server-side (never rely on client checks).
+- **Secrets**: **NEVER** commit secrets. Use `.env.local`.
+- **Error hygiene**: Do not leak stack traces or internals in production responses.
 
-# REQUIRED STRUCTURE FOR THE FILE:
-
-1.  **Workflow & Memory Rules:**
-    - ALWAYS read `project_config.md`, `log.md`, and `plan.md` before starting a new session or executing a complex command.
-    - NEVER jump to a future phase in the plan before the current one is verified and working.
-    - Ask for human approval before installing any major new npm packages not listed in the config.
-
-2.  **UI/UX & Frontend Standards (CRITICAL):**
-    - **Aesthetic:** Adhere strictly to a premium, minimalist, modern design language. 
-    - **Animations:** Use Framer Motion for smooth, high-end interactions (fade-ups, subtle scaling, seamless page transitions). NEVER use overly bouncy, fast, or cheap-looking animations. Less is more.
-    - **Tailwind:** Use utility classes efficiently. Maintain generous white space (negative space) and clean typography.
-    - **Responsiveness:** All components MUST be mobile-first and fully responsive without breaking animations.
-
-3.  **Backend & Security Rules:**
-    - **Zero Trust:** Always validate user inputs on the backend using Zod or a similar schema validator. Never trust client-side data.
-    - **Auth:** Implement strict Role-Based Access Control (RBAC). Admin routes must be fully protected both on the client (middleware) and server (API routes).
-    - **Database:** Optimize Prisma/Supabase queries. Avoid N+1 query problems.
-
-4.  **Code Quality & Git:**
-    - Keep components small, modular, and reusable. Use proper Next.js App Router conventions (e.g., separating Server Components from Client Components correctly).
-    - Avoid leaving `console.log` in production-ready code.
-
-Format the markdown to be punchy and highly directive. Use bold text to emphasize strict prohibitions (e.g., **NEVER**, **ALWAYS**).
+## Code Quality & Git Rules
+- **Next.js conventions**: Keep Server vs Client Components correct; minimize `use client`.
+- **Small modules**: Prefer small, composable components and utilities.
+- **No debug noise**: **NEVER** leave `console.log` in production paths.
+- **Dependencies**: Minimize. Add only when justified and approved.

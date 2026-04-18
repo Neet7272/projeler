@@ -1,43 +1,64 @@
-Act as a Technical Lead and Senior Project Manager. Your task is to initialize the `plan.md` file for the "Ar-Ge İnovasyon ve Girişimcilik Kulübü" web platform project.
+## Strict AI Directives
+- **NEVER** deviate from this plan without explicit permission.
+- Update checkboxes from `- [ ]` to `- [x]` as items complete.
+- When an entire Phase is finished and verified, mark it as **[COMPLETED]** here and move the milestone details to `workflow_state.md/archive_log.md`.
 
-Do not write code. Output ONLY the complete markdown content for the `plan.md` file.
+## Phase 1: Foundation & Infrastructure (Next.js + Base UI) — **[COMPLETED]**
+- [x] Initialize Next.js (App Router) in repo root
+  - [x] TypeScript enabled
+  - [x] ESLint enabled
+  - [x] `src/` directory enabled (preferred)
+  - [x] App Router enabled
+- [x] Setup Tailwind CSS
+  - [x] `globals.css` wired
+  - [x] Dark-mode strategy decided (system via `prefers-color-scheme`) and documented
+- [x] Setup Framer Motion
+  - [x] Base animation primitives (page fade, fade-up)
+  - [x] `prefers-reduced-motion` respected
+- [x] Create minimal premium shell UI
+  - [x] `app/layout.tsx` baseline layout (typography, background, spacing)
+  - [x] Home page placeholder with premium hero + simple CTA
+- [x] Create base folder structure
+  - [x] `components/` (UI building blocks)
+  - [x] `lib/` (helpers: classnames, motion presets, constants)
+  - [x] `types/` (shared types)
+- [x] Phase 1 bookkeeping
+  - [x] Update `workflow_state.md/log.md`
+  - [x] Update `workflow_state.md/state.md`
 
-# PURPOSE OF THIS FILE:
-In our autonomous AI coding workflow, `plan.md` is the Master Roadmap. The AI Agent MUST strictly follow the phases outlined here in chronological order. The AI is forbidden from jumping to a later phase if the current phase's core requirements are not fully tested and functioning.
+## Phase 2: Unified Member Profile & Dashboard — **[COMPLETED]**
+- [x] Member dashboard UI (minimalist, dark-mode first if chosen)
+- [x] “Single role” logic (all users are Members; Admin is an elevated flag)
+- [x] Profile edit pages (skills/tags, portfolio links)
 
-# REQUIRED STRUCTURE FOR THE FILE:
+## Phase 3: Matchmaking Engine (Team Ads) — **[COMPLETED]**
+- [x] “Post a Team Ad” form (title, description, required skills tags, project status)
+- [x] “Explore Ads” marketplace (filters by tags/skills)
+- [x] Application flow (apply to ads)
 
-1.  **Strict AI Directives:**
-    Write a brief instruction block stating:
-    - Never deviate from this plan without explicit user permission.
-    - Check off `[ ]` to `[x]` as sub-tasks are completed.
-    - Move completed Phases to `archive_log.md` when fully finished, but keep the Phase title here marked as `[COMPLETED]`.
+## Phase 4: Admin Panel & Moderation
+## Phase 4: Admin Panel & Moderation — **[COMPLETED]**
+- [x] Secure admin routes (RBAC enforced)
+- [x] Moderation queue (Team Ads default Pending; require Approval)
+- [x] Announcements/Events CRUD (priority/urgency)
 
-2.  **Phase 1: Foundation & Infrastructure (Next.js + DB):**
-    - Initialize Next.js App Router, Tailwind, and Framer Motion.
-    - Setup Database ORM (Prisma or Supabase).
-    - Create the core Database Schema (User/Member, Announcement, Team_Ad, Application).
-    - Setup Authentication (NextAuth or Supabase Auth).
+## Phase 5: UI/UX Polish & Performance
+## Phase 5: UI/UX Polish & Performance — **[COMPLETED]**
+- [x] Smooth page transitions (Framer Motion)
+- [x] Scroll-triggered fade-ups (subtle)
+- [x] Final mobile-first responsiveness pass
+- [x] SEO metadata + performance optimization
 
-3.  **Phase 2: Unified Member Profile & Dashboard:**
-    - Build the Member Dashboard UI (Dark-mode first, minimalist).
-    - Implement the "Single Role" logic (All users are Members).
-    - Create Profile Edit pages (Support for adding skills/tags like [Unity], [React], and external Portfolio links).
+## Phase 6: The Great Pivot (Refinement & Expansion) — **[COMPLETED]**
+- [x] Clean light theme (Blue/White) + akademik terminoloji pivotu
+- [x] Gerçekçi proje mock verisi + detay sayfası dış linkler
+- [x] Duyurularda cover image URL (admin + public)
+- [x] Mock auth redirect + profil gate
+- [x] Landing: particles hero + “Nasıl Çalışır?” bölümü
 
-4.  **Phase 3: The Matchmaking Engine (Team Ads):**
-    - Create the "Post a Team Ad" form (Requires title, description, required skills tags, project status).
-    - Create the "Explore Ads" marketplace (Filtering by tags/skills).
-    - Implement the Application flow (Members applying to open ads).
-
-5.  **Phase 4: Admin Panel & Moderation Strictness:**
-    - Create the secure Admin Route.
-    - Build the Moderation Queue (Team Ads must be set to 'Pending' by default and require Admin 'Approval' to be visible in the marketplace).
-    - Build CRUD operations for Club Announcements/Events (with priority/urgency levels).
-
-6.  **Phase 5: High-End UI/UX Polish & Animations:**
-    - Implement smooth page transitions (Framer Motion).
-    - Add scroll-triggered fade-ups and premium minimalist interactions.
-    - Final Mobile-first responsiveness pass.
-    - SEO metadata generation and performance optimization.
-
-Format this file using standard markdown checkboxes (`- [ ]`). Keep it highly structured so the AI can easily parse what needs to be done next.
+## Phase 7: Real Backend Foundation & Prisma Schema
+- [x] Install & initialize Prisma (`prisma`, `@prisma/client`, `prisma init`)
+- [x] Design relational `schema.prisma` (User/Project/Application/Announcement + relations)
+- [x] Add `src/lib/prisma.ts` (global Prisma client instantiation for Next.js)
+- [ ] (Next) Create first API route handlers (read-only) without wiring UI
+- [ ] (Next) Migrations + seed strategy (safe, incremental)

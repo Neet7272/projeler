@@ -1,41 +1,98 @@
-Act as a Senior System Architect, Backend Security Expert, and Award-Winning UI/UX Developer. Your task is to generate a comprehensive, highly detailed `project_config.md` file for a new web platform project. 
+## Project Vision & Context
+The **Ar-Ge İnovasyon ve Girişimcilik Kulübü** web platform is the club’s official, public-facing website and members-only workspace.
 
-The project is the official platform for the "R&D, Innovation, and Entrepreneurship Club" (Ar-Ge İnovasyon ve Girişimcilik Kulübü). The primary focus of the platform is to share club announcements/competitions and to provide a dynamic "Matchmaking & Team Building" marketplace where students can either post ideas looking for team members or offer their skills to join existing projects.
+**Primary goals**
+- Publish **announcements / competitions / events** with a clean editorial experience.
+- Provide a **Matchmaking & Team Building** marketplace where students can:
+  - post a project idea and request teammates (**Team Ads**)
+  - apply to existing team ads
+  - showcase their skills and portfolios in a unified **Member Profile**
 
-Do not write code yet. Output ONLY the complete markdown content for the `project_config.md` file based on the strict architectural and design requirements below.
+**Non-goals (for early phases)**
+- Complex multi-role marketplace (no “employer vs candidate” split).
+- Overly decorative UI; the product must feel **premium, minimalist, and fast**.
 
-# CORE REQUIREMENTS FOR THE CONFIG:
+## Technology Stack
+- **Framework**: Next.js (App Router) with TypeScript
+- **Styling**: Tailwind CSS
+- **Animation**: Framer Motion (subtle, premium; no “bouncy” motion)
+- **Backend**: Next.js Route Handlers (`app/api/*`)
+- **Database**: **PostgreSQL + Prisma**
+- **Auth**: (Phase 7+ decision) Auth.js (NextAuth) **or** custom session/JWT (to be implemented incrementally)
+- **Validation**: Zod for server-side input validation
 
-1.  **Tech Stack Definition:**
-    * **Frontend:** Next.js (App Router) for superior SEO, fast page loads, and Server-Side Rendering.
-    * **Styling:** Tailwind CSS for a modern, utility-first approach.
-    * **Animations:** Framer Motion (or GSAP). Animations MUST be premium, smooth, and high-end. Think fade-ups, subtle parallax, and seamless page transitions (inspired by top-tier agency websites), but keep the visual clutter to zero. 
-    * **Backend & DB:** Next.js API routes with Prisma ORM and PostgreSQL (or Supabase). 
-    * **Auth:** NextAuth.js or Supabase Auth.
+## System Architecture
+### App structure (high level)
+- Public marketing pages (home, announcements index, announcement detail, team ads index, team ad detail)
+- Authenticated area (member dashboard, profile, create team ad, applications)
+- Admin area (moderation queue, announcements CRUD)
 
-2.  **Platform Architecture & User Flow:**
-    * **Single Unified Role (Member):** Do NOT split users into "Job Seekers" vs "Employers". All users log in as Members. From their dashboard, they can either "Post a Team Ad" or "Apply to an Ad".
-    * **Admin Panel:** Needs full CRUD for Announcements/Competitions and a strict Moderation Queue for Team Ads (Ads must be approved before going live).
-    * **Matchmaking Mechanics:** Implement a robust tagging system (e.g., [Unity], [3D Modeling], [UI/UX], [Frontend]). User profiles must support portfolio links (GitHub, Behance, etc.). Project ads must indicate current status (Idea, Prototype, Active Development).
+### Database schema overview (minimum viable)
+- **User / Member**
+  - id, name, email, image
+  - bio, department, year
+  - skills/tags (many-to-many or array depending on DB strategy)
+  - portfolio links (GitHub, LinkedIn, Behance, personal site)
+  - role flag for **Admin** vs **Member** (RBAC)
+- **Announcement**
+  - title, slug, content, publishedAt, priority
+- **TeamAd**
+  - title, description, requiredSkills/tags, status (Idea/Prototype/Active)
+  - moderationState (Pending/Approved/Rejected)
+  - ownerMemberId
+- **Application**
+  - teamAdId, applicantMemberId, message, createdAt, status
 
-3.  **Design & UI/UX Principles:**
-    * Aesthetic: Ultra-modern, minimalist, premium, and sophisticated. Heavy use of negative space, elegant typography, and a cohesive dark-mode-first or high-contrast theme.
-    * Mobile-First: 100% responsive without compromising animation quality on mobile devices.
-    * Clarity: Information hierarchy must be flawless. Complex data (like matchmaking filters) should feel intuitive and simple.
+### API / Route Handlers
+- All write endpoints must:
+  - validate input with **Zod**
+  - enforce auth & authorization server-side
+  - return consistent errors (no leaking stack traces)
 
-4.  **Security, SEO & Performance:**
-    * **Security:** Enforce strict RBAC (Role-Based Access Control) between Admin and Member. Implement API rate limiting, input sanitization (Zod/Yup), and secure handling of environment variables.
-    * **SEO:** Dynamic meta tags for public project ads and announcements. Semantic HTML5 elements.
-    * **Performance:** Image optimization, lazy loading for heavy animations, and optimized database queries.
+## Core Features (MVP path)
+- **Announcements/Competitions**
+  - Public listing + detail
+  - Admin CRUD (create/edit/publish)
+- **Matchmaking**
+  - Team Ads marketplace with tag filtering
+  - Apply flow for members
+- **Admin Moderation**
+  - Team ads default to **Pending**
+  - Admin approves before public listing
 
-# STRUCTURE OF THE MD FILE:
-Structure the `project_config.md` clearly with the following sections:
-- ## Project Vision & Context
-- ## Technology Stack
-- ## System Architecture (Database Schema Overview, API Structure)
-- ## Core Features (Matchmaking, Admin Moderation, Announcements)
-- ## UI/UX & Animation Guidelines (Specific motion design rules)
-- ## Security & SEO Requirements
-- ## Folder Structure (Next.js App router specific)
+## UI/UX & Animation Guidelines
+**Design language**
+- Premium minimalism: generous whitespace, strict alignment, consistent spacing scale.
+- Typography: neutral modern font system, clear hierarchy (H1/H2/body).
+- Dark-mode-first or high-contrast theme (decide in Phase 1 setup; keep consistent).
 
-Write the document professionally in English. Ensure it serves as the ultimate source of truth for the autonomous agent building this app.
+**Motion rules (Framer Motion)**
+- Default pattern: subtle **fade + translateY(8–16px)** on enter.
+- Duration: ~\(0.25s–0.45s\), easing: `easeOut`-like curves.
+- **NEVER** use playful/bouncy presets for core UI.
+- Page transitions: simple cross-fade; avoid layout jank.
+
+**Accessibility**
+- Keyboard navigable UI, visible focus rings.
+- Respect `prefers-reduced-motion` (animations must degrade gracefully).
+
+## Security & SEO Requirements
+**Security**
+- Zero-trust: server validates everything.
+- RBAC: Admin-only routes protected in **middleware** and on the server.
+- Never commit secrets; use `.env.local`.
+- Rate limiting for auth-sensitive and write endpoints (Phase 2+ if needed).
+
+**SEO**
+- Semantic HTML, OpenGraph meta for public pages.
+- Clean URLs: `/announcements/[slug]`, `/team-ads/[id-or-slug]`.
+- Performance: image optimization (`next/image`), avoid heavy JS on public pages.
+
+## Folder Structure (App Router)
+- `app/` (routes, layouts)
+- `app/(public)/...` and `app/(dashboard)/...` (route groups)
+- `app/api/` (route handlers)
+- `components/` (shared UI)
+- `lib/` (server utilities, auth, db, validation)
+- `styles/` (globals if needed)
+- `types/` (shared types where appropriate)
