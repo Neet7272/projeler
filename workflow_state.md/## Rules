@@ -1,7 +1,0 @@
-Operating Loop: Before any action, read workflow_state.md -> Note Phase & Status -> Consult project_config.md for tech stack -> Act (Agent Mode/Terminal) -> Update workflow_state.md.
-
-Phase Transitions: INIT -> BLUEPRINT (Planning) -> CONSTRUCT (Coding) -> VALIDATE (Testing) -> COMPLETED. Never skip the VALIDATE phase. If tests/build fail, fix them before moving on.
-
-RULE_LOG_ROTATE_01: If the ## Log section exceeds 5000 characters, summarize the top 5 most important events into the ## ArchiveLog section, then clear the ## Log to save context window.
-
-RULE_SUMMARY_01: After a successful VALIDATE phase, prepend a one-sentence summary of what was built as a new list item to the ## Changelog in project_config.md.

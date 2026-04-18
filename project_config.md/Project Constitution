@@ -1,27 +1,41 @@
-1. Project Goal
-The goal of this project is to build a modern, high-performance, and fully responsive full-stack web application from scratch. The application must feature a professional UI/UX, robust routing, and scalable architecture.
+Act as a Senior System Architect, Backend Security Expert, and Award-Winning UI/UX Developer. Your task is to generate a comprehensive, highly detailed `project_config.md` file for a new web platform project. 
 
-2. Tech Stack & Architecture
-Frontend Framework: Next.js (App Router), React, TypeScript
+The project is the official platform for the "R&D, Innovation, and Entrepreneurship Club" (Ar-Ge İnovasyon ve Girişimcilik Kulübü). The primary focus of the platform is to share club announcements/competitions and to provide a dynamic "Matchmaking & Team Building" marketplace where students can either post ideas looking for team members or offer their skills to join existing projects.
 
-Styling: Tailwind CSS
+Do not write code yet. Output ONLY the complete markdown content for the `project_config.md` file based on the strict architectural and design requirements below.
 
-UI Components: shadcn/ui and Lucide Icons (Focus on modern, clean, glassmorphism or minimalist aesthetic)
+# CORE REQUIREMENTS FOR THE CONFIG:
 
-Backend/Database: Node.js API routes (Next.js) with mock data initially. Prepare architecture for easy Supabase/Firebase integration later.
+1.  **Tech Stack Definition:**
+    * **Frontend:** Next.js (App Router) for superior SEO, fast page loads, and Server-Side Rendering.
+    * **Styling:** Tailwind CSS for a modern, utility-first approach.
+    * **Animations:** Framer Motion (or GSAP). Animations MUST be premium, smooth, and high-end. Think fade-ups, subtle parallax, and seamless page transitions (inspired by top-tier agency websites), but keep the visual clutter to zero. 
+    * **Backend & DB:** Next.js API routes with Prisma ORM and PostgreSQL (or Supabase). 
+    * **Auth:** NextAuth.js or Supabase Auth.
 
-Package Manager: pnpm or npm
+2.  **Platform Architecture & User Flow:**
+    * **Single Unified Role (Member):** Do NOT split users into "Job Seekers" vs "Employers". All users log in as Members. From their dashboard, they can either "Post a Team Ad" or "Apply to an Ad".
+    * **Admin Panel:** Needs full CRUD for Announcements/Competitions and a strict Moderation Queue for Team Ads (Ads must be approved before going live).
+    * **Matchmaking Mechanics:** Implement a robust tagging system (e.g., [Unity], [3D Modeling], [UI/UX], [Frontend]). User profiles must support portfolio links (GitHub, Behance, etc.). Project ads must indicate current status (Idea, Prototype, Active Development).
 
-3. Strict Development Rules
-Anti-Lazy Rule: You are an expert senior engineer. You DO NOT use placeholders like //... existing code.... You output the FULL content of the file every time. You do not be lazy.
+3.  **Design & UI/UX Principles:**
+    * Aesthetic: Ultra-modern, minimalist, premium, and sophisticated. Heavy use of negative space, elegant typography, and a cohesive dark-mode-first or high-contrast theme.
+    * Mobile-First: 100% responsive without compromising animation quality on mobile devices.
+    * Clarity: Information hierarchy must be flawless. Complex data (like matchmaking filters) should feel intuitive and simple.
 
-Clean Code: Keep components modular and strictly typed using TypeScript interfaces. Avoid dumping all logic into a single file.
+4.  **Security, SEO & Performance:**
+    * **Security:** Enforce strict RBAC (Role-Based Access Control) between Admin and Member. Implement API rate limiting, input sanitization (Zod/Yup), and secure handling of environment variables.
+    * **SEO:** Dynamic meta tags for public project ads and announcements. Semantic HTML5 elements.
+    * **Performance:** Image optimization, lazy loading for heavy animations, and optimized database queries.
 
-Security: Never hardcode API keys or secrets. Always use .env.local for environment variables.
+# STRUCTURE OF THE MD FILE:
+Structure the `project_config.md` clearly with the following sections:
+- ## Project Vision & Context
+- ## Technology Stack
+- ## System Architecture (Database Schema Overview, API Structure)
+- ## Core Features (Matchmaking, Admin Moderation, Announcements)
+- ## UI/UX & Animation Guidelines (Specific motion design rules)
+- ## Security & SEO Requirements
+- ## Folder Structure (Next.js App router specific)
 
-Language: Code, variables, and comments must be in English. The actual user interface (UI texts) visible to the end-user should be in Turkish.
-
-4. Changelog
-- Premium görsel arka plan sistemi, gelişmiş SEO altyapısı ve Zod/rate-limit destekli sertleştirilmiş iletişim API’si ile landing page üst seviye bir ürün vitrini haline getirildi ve doğrulama başarıyla tamamlandı.
-- Modern yüksek teknoloji açılış sayfası (hero, özellikler bölümü ve iletişim formu ile) Next.js, Tailwind CSS ve shadcn kullanılarak inşa edildi ve üretim derlemesi başarıyla alındı.
-- Project initialized and base configuration set.
+Write the document professionally in English. Ensure it serves as the ultimate source of truth for the autonomous agent building this app.
