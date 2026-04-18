@@ -4,9 +4,9 @@
 - When the **Done** list grows, summarize major milestones into `workflow_state.md/archive_log.md` and prune Done here.
 
 ## Current Phase & Objective
-**Phase 11: Ultimate Refinement (UX, duyuru mimarisi, içerik, güvenlik, SEO)**
+**Phase 12: Advanced Cloud Integration & UX Overhaul**
 
-Objective: Auth UI (Giriş/Kayıt sekmesi); duyurular hub + kategori şeritleri + Prisma `AnnouncementCategory`; zengin duyuru detayı; `/hakkimizda` + eşleştirme “Nasıl çalışır?”; gerçekçi seed + admin bilgisinin terminale yazdırılması; server action oturum/rol sıkılaştırması + Zod; proje/duyuru JSON-LD ve metadata.
+Objective: Google OAuth + PrismaAdapter; Cloudinary yükleme (duyuru kapak + profil); Ar-Ge hero partikülleri; `/hakkimizda` yalnızca kurumsal içerik / “Nasıl çalışır?” ayrı landing bileşeni; mobil menü ve dokunma hedefleri; `.env.example`.
 
 ## Active Task Board
 ### To Do
@@ -31,6 +31,7 @@ Objective: Auth UI (Giriş/Kayıt sekmesi); duyurular hub + kategori şeritleri 
 - [x] Phase 10 / Step 4: `src/actions/applicationActions.ts`, `ApplicationModal` → `submitApplication`
 - [x] Phase 10 / Step 5: `store.ts` / `storeCore.ts` silindi; `log.md` / `state.md` güncellendi; `.env` içinde `AUTH_SECRET`
 - [x] Phase 11: Auth sayfası (Framer Motion Giriş/Kayıt); kayıt `registerWithCredentials`; duyuru kategorileri + hub + `/duyurular/kategori/[slug]`; admin CRUD kategori + dış başvuru alanları; parallax kapak + blog tipografisi; seed (TEKNOFEST/TÜBİTAK/Ideathon vb.) + admin çıktısı; `requireAuthedMemberUser` + başvuruda sahip kontrolü; proje detay JSON-LD; `lucide-react`; `AnnouncementsPublicClient` kaldırıldı
+- [x] Phase 12: `Google` provider + `PrismaAdapter`; giriş sayfası “Google ile devam et”; `next-cloudinary` + `CloudinaryImageField` (admin duyuru kapak, profil foto); `NetworkParticles` Ar-Ge estetiği; `LandingMatchmakingFlow` + `/hakkimizda` ayrımı; `SiteHeader` mobil drawer; `.env.example`; `res.cloudinary.com` remote image
 
 ### In Progress
 - (boş)
@@ -121,7 +122,10 @@ Objective: Auth UI (Giriş/Kayıt sekmesi); duyurular hub + kategori şeritleri 
 - `src/components/announcements/CategoryBannerStrip.tsx` / `AnnouncementsHub.tsx` / `AnnouncementCoverParallax.tsx`
 - `src/app/duyurular/kategori/[slug]/page.tsx`
 - `src/app/hakkimizda/page.tsx`
-- `src/components/home/MatchmakingHowItWorks.tsx`
+- `src/components/home/LandingMatchmakingFlow.tsx`
+- `src/components/media/CloudinaryImageField.tsx`
+- `src/lib/cloudinary.ts`
+- `.env.example`
 - `src/lib/serverActionSecurity.ts`
 - `src/lib/siteUrl.ts`
 - `src/actions/authActions.ts`
@@ -136,6 +140,9 @@ Objective: Auth UI (Giriş/Kayıt sekmesi); duyurular hub + kategori şeritleri 
 
 ## Recent fix (Phase 11)
 - `AnnouncementCoverParallax`: `useTransform` çıkış aralığı tek tipte (`string[]`) tutuldu; `reduce` için `["0%","0%"]` kullanıldı (TS derlemesi).
+
+## Recent fix (Phase 12)
+- Google OAuth + `PrismaAdapter`; `next-cloudinary`; `LandingMatchmakingFlow`; mobil header; `.env.example`.
 
 ## Recent fix (Auth — kritik)
 - **Edge runtime**: `middleware` Edge’te çalışır; `@/auth` içindeki `bcrypt` / `prisma` paketlenince Node `crypto` hatası oluşuyordu. Çözüm: `src/auth.config.ts` (Node modülü yok) + middleware’de `NextAuth(authConfig)`; tam kimlik doğrulama `src/auth.ts` (Node).

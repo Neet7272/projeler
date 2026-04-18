@@ -19,5 +19,6 @@ declare module "next-auth/jwt" {
     id: string;
     role: "ADMIN" | "MEMBER";
     profileComplete: boolean;
+    picture?: string | null;
   }
 }

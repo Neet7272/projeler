@@ -6,8 +6,8 @@
 ## Infrastructure & Environment Status
 - **Next.js App Router**: Fully Working
 - **Database Connection**: Fully Working (Prisma + PostgreSQL)
-- **Authentication**: Fully Working (NextAuth.js v5 + Credentials + Prisma Adapter; JWT oturum)
-- **Environment Variables**: Fully Working (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`)
+- **Authentication**: Fully Working (NextAuth.js v5 + Credentials + Google OAuth + Prisma Adapter; JWT oturum)
+- **Environment Variables**: Fully Working (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`; isteğe bağlı `AUTH_GOOGLE_*`, Cloudinary, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`)
 
 ## Core Features Status Tracker
 - **Routing & Layout baseline**: Fully Working
@@ -62,10 +62,16 @@
 - **Duyuru kategorileri + hub şeritleri + kategori rotaları**: Fully Working
 - **Duyuru detay (kapak, tipografi, dış başvuru, Article JSON-LD)**: Fully Working
 - **Auth UI (Giriş/Kayıt toggle)**: Fully Working
-- **`/hakkimizda` + matchmaking “Nasıl çalışır?”**: Fully Working
+- **`/hakkimizda` (kurumsal) + landing “Nasıl çalışır?”**: Fully Working (Phase 12’de ayrıldı)
 - **Seed (gerçekçi TR içerik; admin çıktısı)**: Fully Working
 - **Server actions**: Oturum + DB kullanıcı doğrulaması (`requireAuthedMemberUser` / `requireAdmin`); ek Zod sınırları; başvuruda proje sahibi engeli
 - **Proje detay SEO**: `CreativeWork` JSON-LD + genişletilmiş `generateMetadata`
+
+## Phase 12 (Cloud & UX) Status
+- **Google OAuth**: Fully Working (sunucuda `AUTH_GOOGLE_ID` / `AUTH_GOOGLE_SECRET` veya `GOOGLE_CLIENT_*`; istemci butonu için `NEXT_PUBLIC_GOOGLE_CLIENT_ID`)
+- **Cloudinary yükleme + CldImage önizleme**: Fully Working (`NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME`, `NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET`; kapalıyken URL fallback)
+- **Mobil üst menü (hamburger, ≥44px hedefler)**: Fully Working
+- **Ar-Ge hero partikülleri + landing zaman çizelgesi**: Fully Working
 
 ## Known Bugs & Technical Debt
 - Credentials prototipi: üretimde OAuth/sağlayıcı ve e-posta doğrulama düşünülmeli.
@@ -80,6 +86,7 @@
 - **tailwindcss**: 4.2.2
 - **framer-motion**: 12.38.0
 - **lucide-react**: (installed)
+- **next-cloudinary**: (installed)
 - **react-tsparticles**: (installed)
 - **tsparticles**: (installed)
 - **tsparticles-slim**: (installed)

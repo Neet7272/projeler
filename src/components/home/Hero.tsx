@@ -17,7 +17,7 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden rounded-none border-y border-[var(--hairline)] bg-white px-6 py-16 sm:py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_420px_at_40%_0%,rgba(37,99,235,0.12),transparent_60%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_480px_at_45%_-10%,rgba(6,182,212,0.14),transparent_55%),radial-gradient(700px_360px_at_80%_20%,rgba(37,99,235,0.08),transparent_50%)]" />
       <div className="pointer-events-none absolute inset-0 opacity-70">
         <NetworkParticles />
       </div>

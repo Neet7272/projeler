@@ -16,6 +16,7 @@ import {
   prismaCategoryToUiLabel,
   type AnnouncementCategoryUiLabel,
 } from "@/lib/announcementMappers";
+import { CloudinaryImageField } from "@/components/media/CloudinaryImageField";
 import { cn } from "@/lib/cn";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import {
@@ -343,7 +344,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                 </div>
                 <button
                   type="button"
-                  className="rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
                   onClick={() => setOpen(false)}
                 >
                   Kapat
@@ -453,16 +454,12 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                   </div>
 
                   <div>
-                    <label className="text-xs font-medium text-[var(--muted)]">
-                      Cover Image URL (opsiyonel)
-                    </label>
-                    <div className="mt-2">
-                      <Input
-                        value={coverImageUrl}
-                        onChange={(e) => setCoverImageUrl(e.target.value)}
-                        placeholder="https://..."
-                      />
-                    </div>
+                    <CloudinaryImageField
+                      label="Kapak görseli (opsiyonel)"
+                      value={coverImageUrl}
+                      onChange={setCoverImageUrl}
+                      helperText="Cloudinary ile yükle veya URL yapıştır. Boş bırakılabilir."
+                    />
                     {errors.coverImageUrl ? (
                       <p className="mt-2 text-xs text-rose-300">
                         {errors.coverImageUrl}

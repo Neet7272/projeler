@@ -18,18 +18,30 @@ export function NetworkParticles() {
         fpsLimit: 60,
         fullScreen: { enable: false },
         particles: {
-          color: { value: "#2563eb" },
+          color: { value: ["#22d3ee", "#38bdf8", "#e2e8f0", "#60a5fa"] },
+          shape: { type: "circle" },
           links: {
             enable: true,
-            color: "#2563eb",
-            distance: 140,
-            opacity: 0.18,
+            color: "#0ea5e9",
+            distance: 120,
+            opacity: 0.22,
             width: 1,
+            triangles: { enable: true, opacity: 0.06 },
           },
-          move: { enable: true, speed: 0.7, outModes: { default: "out" } },
-          number: { value: 70, density: { enable: true } },
-          opacity: { value: 0.22 },
-          size: { value: { min: 1, max: 3 } },
+          move: {
+            enable: true,
+            speed: 0.55,
+            direction: "none",
+            random: true,
+            straight: false,
+            outModes: { default: "bounce" },
+          },
+          number: { value: 64, density: { enable: true, area: 900 } },
+          opacity: {
+            value: { min: 0.12, max: 0.45 },
+            animation: { enable: true, speed: 0.35, minimumValue: 0.08 },
+          },
+          size: { value: { min: 1, max: 3.2 } },
         },
         detectRetina: true,
         interactivity: {
@@ -38,7 +50,10 @@ export function NetworkParticles() {
             resize: true,
           },
           modes: {
-            grab: { distance: 160, links: { opacity: 0.25 } },
+            grab: {
+              distance: 150,
+              links: { opacity: 0.45 },
+            },
           },
         },
       }}
@@ -46,4 +61,3 @@ export function NetworkParticles() {
     />
   );
 }
-

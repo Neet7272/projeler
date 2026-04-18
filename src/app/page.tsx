@@ -1,6 +1,6 @@
 import { Hero } from "@/components/home/Hero";
 import { LandingSections } from "@/components/home/LandingSections";
-import { MatchmakingHowItWorks } from "@/components/home/MatchmakingHowItWorks";
+import { LandingMatchmakingFlow } from "@/components/home/LandingMatchmakingFlow";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <div>
       <Hero />
-      <MatchmakingHowItWorks />
+      <LandingMatchmakingFlow />
       <LandingSections />
     </div>
   );

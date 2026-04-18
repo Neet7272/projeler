@@ -19,6 +19,18 @@ const optionalHttpUrl = z
   });
 
 const updateProfileSchema = z.object({
+  image: z
+    .string()
+    .trim()
+    .max(2048)
+    .optional()
+    .refine(
+      (v) =>
+        v === undefined ||
+        v.length === 0 ||
+        /^https?:\/\//i.test(v),
+      { message: "Profil görseli geçerli bir https URL olmalı." }
+    ),
   skills: z.array(z.string().min(1).max(64)).min(0).max(40),
   portfolio: z.object({
     github: optionalHttpUrl,
@@ -59,9 +71,13 @@ export async function updateUserProfile(
         ? { ...(current.portfolioUrls as Record<string, unknown>) }
         : {};
 
+    const img = (parsed.data.image ?? "").trim();
+    const imageValue = img.length > 0 ? img : null;
+
     await prisma.user.update({
       where: { id: user.id },
       data: {
+        image: imageValue,
         skills: parsed.data.skills,
         portfolioUrls: {
           ...base,

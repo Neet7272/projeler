@@ -8,6 +8,7 @@ import { FadeUp } from "@/components/dashboard/FadeUp";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Toast, type ToastState } from "@/components/ui/Toast";
+import { CloudinaryImageField } from "@/components/media/CloudinaryImageField";
 import { updateUserProfile } from "@/actions/userActions";
 
 const suggestedTags = [
@@ -52,6 +53,7 @@ export function ProfileSettingsClient({ user }: Props) {
   const [linkedin, setLinkedin] = useState(initialPortfolio.linkedin);
   const [website, setWebsite] = useState(initialPortfolio.website);
   const [behance, setBehance] = useState(initialPortfolio.behance);
+  const [profileImage, setProfileImage] = useState(user.image ?? "");
 
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState<ToastState>({ open: false });
@@ -86,6 +88,7 @@ export function ProfileSettingsClient({ user }: Props) {
     if (saving) return;
     setSaving(true);
     const res = await updateUserProfile({
+      image: profileImage,
       skills,
       portfolio: { github, linkedin, website, behance },
     });
@@ -121,6 +124,21 @@ export function ProfileSettingsClient({ user }: Props) {
       </FadeUp>
 
       <div className="mt-10 space-y-4">
+        <section className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6">
+          <p className="text-sm font-medium text-[var(--muted)]">Profil fotoğrafı</p>
+          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+            Cloudinary ile yükle; oturum ve vitrin görünürlüğünde kullanılır.
+          </p>
+          <div className="mt-4 max-w-md">
+            <CloudinaryImageField
+              label="Profil görseli"
+              value={profileImage}
+              onChange={setProfileImage}
+              aspectClassName="aspect-square max-h-48"
+            />
+          </div>
+        </section>
+
         <section className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6">
           <p className="text-sm font-medium text-[var(--muted)]">Kimlik</p>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
