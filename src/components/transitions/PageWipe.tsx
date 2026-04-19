@@ -4,18 +4,15 @@ import { createPortal } from "react-dom";
 import { useLayoutEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
-/** Rise-at-Seven tarzı: alttan kapanır, kısa duraklama, yukarı süzülerek açılır */
-const WIPE_DURATION = 0.92;
-const TIMES = [0, 0.4, 0.48, 1] as const;
-const EASE_SEGMENTS: [
-  [number, number, number, number],
-  "linear",
-  [number, number, number, number],
-] = [
-  [0.76, 0, 0.24, 1],
-  "linear",
-  [0.19, 1, 0.22, 1],
-];
+/**
+ * Phase 24: Ultra-fast GPU crescent wipe
+ * Tek statik SVG shape + sadece `transform` (`y`) animasyonu.
+ */
+const WIPE_DURATION = 0.5;
+const TIMES = [0, 0.4, 0.5, 1] as const;
+const EASE = [0.76, 0, 0.24, 1] as const;
+const CRESCENT_PATH =
+  "M 0 300 L 0 50 Q 50 0 100 50 L 100 300 Q 50 250 0 300 Z";
 
 /**
  * Her `app/template` remount’unda çalışır; `document.body` portalı ile
@@ -33,19 +30,23 @@ export function PageWipe() {
   if (reduceMotion || finished || !target) return null;
 
   return createPortal(
-    <motion.div
+    <motion.svg
       aria-hidden
-      className="pointer-events-none fixed inset-0 z-[99999] bg-slate-900"
-      initial={{ y: "100%" }}
-      animate={{ y: ["100%", "0%", "0%", "-100%"] }}
+      viewBox="0 0 100 300"
+      preserveAspectRatio="none"
+      className="fixed inset-0 z-[99999] pointer-events-none w-screen h-[150vh] text-cyan-500 fill-current"
+      initial={{ y: "100vh" }}
+      animate={{ y: ["100vh", "-25vh", "-25vh", "-150vh"] }}
       transition={{
         duration: WIPE_DURATION,
         times: [...TIMES],
-        ease: EASE_SEGMENTS,
+        ease: [...EASE],
       }}
       style={{ willChange: "transform" }}
       onAnimationComplete={() => setFinished(true)}
-    />,
+    >
+      <path d={CRESCENT_PATH} />
+    </motion.svg>,
     target,
   );
 }

@@ -6,7 +6,7 @@
 ## Current Phase & Objective
 **Phase 22: Global sayfa süpürme (template tek kaynak)**
 
-Objective: Parçalı `AnimatePresence`/pathname wipe kaldırıldı; `PageWipe` (`bg-slate-900`, `z-[99999]`, body portalı, keyframe cubic-bezier) + yalnızca `app/template.tsx`; her istemci navigasyonunda remount ile sürekli tetikleme; `log`/`state` güncel.
+Objective: SVG `d` morph iptal edildi (CPU lag). `PageWipe` artık **Ultra-Fast GPU Crescent**: tek `motion.svg` (150vh), statik matematiksel path (üstte convex kubbe + altta concave scoop), renk `text-cyan-500` (`#06b6d4`), yalnızca `y` transform animasyonu (0.5s, `times: [0,0.4,0.5,1]`, `ease: [0.76,0,0.24,1]`) + yalnızca `app/template.tsx`; `pointer-events-none`, `z-[99999]`; `log` güncel.
 
 ## Active Task Board
 ### To Do
