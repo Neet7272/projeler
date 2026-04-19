@@ -117,6 +117,20 @@
 - **HTTP güvenlik başlıkları**: Fully Working (`next.config.ts` `headers`; HSTS yalnızca `NODE_ENV=production`)
 - **Oran sınırlama (yumuşak)**: Fully Working (`rateLimit.ts`: proje oluşturma ve başvuru; kalıcı limit için Redis önerisi `serverActionSecurity` notunda)
 
+## Phase 20 (Detay düzeni + bağlantılar) Status
+- **Detay sayfası düzeni**: Fully Working (`AdDetailClient`: hero’da yalnız başlık/özet; “Proje Hakkında” açıklama kartı; proje dış linkleri sol etiket kartından kaldırıldı)
+- **Bağlantı modeli**: Fully Working (`portfolioUrl`, `projectUrl` + mevcut Figma/Notion/repo/competition; şema, mapper, oluşturma formu; sağ sütunda “Bağlantılar” ikonlu dikey liste; içerik/sidebar `gap-8`)
+
+## Phase 21 (Precision UX) Status
+- **Admin duyuru modalı**: Fully Working (panel `max-h` + başlık sabit, form alanı `overflow-y-auto`; mobil alt sayfa `sheetAttach` korundu)
+- **Vitrin kart tıklaması**: Fully Working (`TeamAdsMarketplace`: kart `router.push`, etiket / Detay / Kaydet `stopPropagation`; iç içe `<a>` yok)
+- **Ana sayfa TR**: Fully Working (`LandingSections` üçüncü kart “Yönetim Paneli” + profesyonel açıklama)
+- **Akıllı üst menü**: Fully Working (`SiteHeader`: `fixed` + `useScroll` / `useMotionValueEvent`, yukarı kaydırınca anında görünür; yer tutucu yüksekliği güvenli alan ile uyumlu)
+
+## Phase 22 (Global sayfa geçişi) Status
+- **Tek kaynak template**: Fully Working (`app/template.tsx` → `PageWipe` + `{children}`; parçalı pathname wipe / içerik fade kaldırıldı)
+- **PageWipe**: Fully Working (`document.body` portalı, `z-[99999]`, `bg-slate-900`, keyframe `y` + çok parçalı `ease`; `prefers-reduced-motion`’da atlanır; animasyon bitince portal kaldırılır — tıklamayı engellemez)
+
 ## Known Bugs & Technical Debt
 - Google dışı yerel seed kullanıcıları: giriş için Google OAuth veya DB’de aynı e-posta ile hesap; isteğe bağlı `ADMIN_EMAILS` ile admin menü erişimi.
 - JWT’de rol güncellemesi oturum yenilenene kadar eski kalabilir; admin layout her istekte DB’den doğrular.

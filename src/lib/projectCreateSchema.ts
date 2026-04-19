@@ -27,6 +27,8 @@ const optionalLinks = z
     notion: optionalHttpUrl,
     repository: optionalHttpUrl,
     competition: optionalHttpUrl,
+    portfolioUrl: optionalHttpUrl,
+    projectUrl: optionalHttpUrl,
   })
   .optional();
 
@@ -78,5 +80,7 @@ export function buildProjectExternalUrls(data: CreateProjectInput): Record<strin
   if (L?.notion) urls.notion = L.notion;
   if (L?.repository) urls.repository = L.repository;
   if (L?.competition) urls.competition = L.competition;
+  if (L?.portfolioUrl) urls.portfolioUrl = L.portfolioUrl;
+  if (L?.projectUrl) urls.projectUrl = L.projectUrl;
   return urls;
 }

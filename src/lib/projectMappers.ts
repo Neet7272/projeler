@@ -44,7 +44,14 @@ function parseExternalUrls(raw: unknown): ParsedProjectUrls {
   if (!raw || typeof raw !== "object" || Array.isArray(raw)) return empty;
   const o = raw as Record<string, unknown>;
   const out: ParsedProjectUrls = { lookingFor: [] };
-  for (const k of ["figma", "notion", "competition", "repository"] as const) {
+  for (const k of [
+    "figma",
+    "notion",
+    "competition",
+    "repository",
+    "portfolioUrl",
+    "projectUrl",
+  ] as const) {
     if (typeof o[k] === "string") {
       const s = (o[k] as string).trim();
       if (s) out[k] = s;
@@ -135,12 +142,19 @@ export function mapProjectRowToTeamAd(row: ProjectWithOwner): TeamAd {
   const lookingFor = ext.lookingFor ?? [];
 
   const links: ExternalLinks | undefined =
-    ext.figma || ext.notion || ext.competition || ext.repository
+    ext.figma ||
+    ext.notion ||
+    ext.competition ||
+    ext.repository ||
+    ext.portfolioUrl ||
+    ext.projectUrl
       ? {
           figma: ext.figma,
           notion: ext.notion,
           competition: ext.competition,
           repository: ext.repository,
+          portfolioUrl: ext.portfolioUrl,
+          projectUrl: ext.projectUrl,
         }
       : undefined;
 

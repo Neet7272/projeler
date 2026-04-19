@@ -168,6 +168,8 @@ export function PostTeamAdForm() {
   const [linkNotion, setLinkNotion] = useState("");
   const [linkRepo, setLinkRepo] = useState("");
   const [linkCompetition, setLinkCompetition] = useState("");
+  const [linkPortfolio, setLinkPortfolio] = useState("");
+  const [linkProject, setLinkProject] = useState("");
 
   const [errors, setErrors] = useState<FieldErrors>({});
   const [toast, setToast] = useState<ToastState>({ open: false });
@@ -203,9 +205,14 @@ export function PostTeamAdForm() {
     setErrors({});
 
     const hasLinks =
-      [linkFigma, linkNotion, linkRepo, linkCompetition].some(
-        (s) => s.trim().length > 0,
-      );
+      [
+        linkFigma,
+        linkNotion,
+        linkRepo,
+        linkCompetition,
+        linkPortfolio,
+        linkProject,
+      ].some((s) => s.trim().length > 0);
 
     const payload = {
       title,
@@ -223,6 +230,8 @@ export function PostTeamAdForm() {
             notion: linkNotion.trim() || undefined,
             repository: linkRepo.trim() || undefined,
             competition: linkCompetition.trim() || undefined,
+            portfolioUrl: linkPortfolio.trim() || undefined,
+            projectUrl: linkProject.trim() || undefined,
           }
         : undefined,
     };
@@ -378,7 +387,7 @@ export function PostTeamAdForm() {
             </span>
             <span className="mt-1 block text-xs font-normal text-slate-500">
               Tek satır özet, teslimatlar, zaman taahhüdü, çalışma şekli; Figma,
-              Notion, repo ve yarışma linkleri.
+              Notion, repo, portfolyo, canlı proje ve yarışma linkleri.
             </span>
           </summary>
           <div className="space-y-4 border-t border-slate-200/60 px-6 py-5">
@@ -491,16 +500,44 @@ export function PostTeamAdForm() {
                   />
                 </div>
               </div>
+              <div className="sm:col-span-2">
+                <label className="text-xs font-medium text-slate-500">
+                  Portfolyo (Behance, kişisel site…)
+                </label>
+                <div className="mt-2">
+                  <Input
+                    value={linkPortfolio}
+                    onChange={(e) => setLinkPortfolio(e.target.value)}
+                    placeholder="https://…"
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-2">
+                <label className="text-xs font-medium text-slate-500">
+                  Canlı proje / yarışma sayfası
+                </label>
+                <div className="mt-2">
+                  <Input
+                    value={linkProject}
+                    onChange={(e) => setLinkProject(e.target.value)}
+                    placeholder="Demo, yarışma portalı veya proje sayfası…"
+                  />
+                </div>
+              </div>
             </div>
             {(errors["links.figma"] ||
               errors["links.notion"] ||
               errors["links.repository"] ||
-              errors["links.competition"]) && (
+              errors["links.competition"] ||
+              errors["links.portfolioUrl"] ||
+              errors["links.projectUrl"]) && (
               <p className="text-xs text-rose-600">
                 {errors["links.figma"] ||
                   errors["links.notion"] ||
                   errors["links.repository"] ||
-                  errors["links.competition"]}
+                  errors["links.competition"] ||
+                  errors["links.portfolioUrl"] ||
+                  errors["links.projectUrl"]}
               </p>
             )}
           </div>

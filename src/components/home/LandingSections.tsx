@@ -65,8 +65,8 @@ export function LandingSections() {
               href: "/takim-ilanlari",
             },
             {
-              title: "Dashboard",
-              desc: "İlanların, başvuruların ve profilin tek yerde.",
+              title: "Yönetim Paneli",
+              desc: "İlanlarınızı, başvurularınızı ve profil ayarlarınızı tek bir merkezden yönetin.",
               href: "/dashboard",
             },
           ].map((c) => (

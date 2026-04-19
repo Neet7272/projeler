@@ -214,11 +214,13 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
   }
 
   const panelClass = cn(
-    "border border-slate-200/75 bg-white shadow-[var(--shadow-matte-hover)] backdrop-blur-md",
+    "flex max-h-[85vh] flex-col overflow-hidden border border-slate-200/75 bg-white shadow-[var(--shadow-matte-hover)] backdrop-blur-md",
     isMobile
-      ? "absolute inset-x-0 bottom-0 rounded-t-3xl"
-      : "w-[min(92vw,560px)] rounded-3xl"
+      ? "max-h-[85dvh] w-full rounded-t-3xl"
+      : "w-[min(92vw,560px)] rounded-3xl",
   );
+
+  const sheetAttach = isMobile ? "absolute inset-x-0 bottom-0" : "";
 
   return (
     <div>
@@ -310,7 +312,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
             />
 
             <motion.div
-              className={panelClass}
+              className={cn(panelClass, sheetAttach)}
               initial={
                 reduceMotion
                   ? { opacity: 1, y: 0 }
@@ -334,7 +336,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
               role="dialog"
               aria-modal="true"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
+              <div className="flex shrink-0 items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
                 <div>
                   <p className="text-xs font-medium text-[var(--muted)]">
                     Duyuru
@@ -352,7 +354,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                 </button>
               </div>
 
-              <div className="px-6 py-6">
+              <div className="min-h-0 flex-1 overflow-y-auto overscroll-y-contain px-6 py-6">
                 <div className="space-y-4">
                   <div>
                     <label className="text-xs font-medium text-[var(--muted)]">
@@ -528,7 +530,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
             />
 
             <motion.div
-              className={panelClass}
+              className={cn(panelClass, sheetAttach)}
               initial={
                 reduceMotion
                   ? { opacity: 1, y: 0 }
@@ -552,7 +554,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
               role="dialog"
               aria-modal="true"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
+              <div className="flex shrink-0 items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
                 <div>
                   <p className="text-xs font-medium text-[var(--muted)]">Onay</p>
                   <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">

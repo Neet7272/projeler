@@ -18,6 +18,10 @@ export type ExternalLinks = {
   notion?: string;
   competition?: string;
   repository?: string;
+  /** İlan sahibinin proje portföyü (Behance, site vb.) */
+  portfolioUrl?: string;
+  /** Canlı demo, yarışma sayfası veya genel proje URL’si */
+  projectUrl?: string;
 };
 
 /** `Project.externalUrls` içinde saklanan isteğe bağlı vitrin detayları */

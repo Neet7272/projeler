@@ -4,9 +4,9 @@
 - When the **Done** list grows, summarize major milestones into `workflow_state.md/archive_log.md` and prune Done here.
 
 ## Current Phase & Objective
-**Phase 19: Vitrin detay modeli + güvenlik + motion**
+**Phase 22: Global sayfa süpürme (template tek kaynak)**
 
-Objective: Proje `externalUrls` ile isteğe bağlı vitrin alanları (`tagline`, `deliverables`, `timeCommitment`, `collaborationNotes`, roller, harici linkler); `projectCreateSchema` + `PostTeamAdForm` `<details>`; vitrin/detay/OG güncellemesi; `next.config` güvenlik başlıkları; `rateLimit` (`createProject`, `submitApplication`); `AdDetailClient` motion + `rel=noopener noreferrer`; build yeşil.
+Objective: Parçalı `AnimatePresence`/pathname wipe kaldırıldı; `PageWipe` (`bg-slate-900`, `z-[99999]`, body portalı, keyframe cubic-bezier) + yalnızca `app/template.tsx`; her istemci navigasyonunda remount ile sürekli tetikleme; `log`/`state` güncel.
 
 ## Active Task Board
 ### To Do
@@ -41,6 +41,9 @@ Objective: Proje `externalUrls` ile isteğe bağlı vitrin alanları (`tagline`,
 - [x] Phase 17: `src/lib/seo.ts`; `app/robots.ts`, `sitemap.ts`, `manifest.ts`; kök `layout` metadata + viewport + JSON-LD; korumalı `noindex` layout’lar; sayfa canonical/OG; `SiteHeader`/`SiteFooter` safe-area; `globals` text-size-adjust + `touch-action`; `next.config` sıkıştırma + `X-Powered-By` kapatma
 - [x] Phase 18: `opengraph-image.tsx` / `twitter-image.tsx`; `seo.ts` (`breadcrumbListNode`, `schemaDocument`, SearchAction, `NEXT_PUBLIC_SAME_AS_LINKS`); duyuru/kategori/takım detay JSON-LD; `createdAtIso` + mapper; `motion.ts` spring preset’leri; `LandingSections` / `LandingMatchmakingFlow` / `TeamAdsMarketplace` + `Button` + `Hero` + `globals` animasyonlar
 - [x] Phase 19: `TeamAd` genişletilmiş alanlar + `projectMappers`; `projectCreateSchema.ts`; `projectActions` + `applicationActions` rate limit; `next.config` güvenlik header’ları; `PostTeamAdForm` (roller, detay, linkler); `AdDetailClient` / `TeamAdsMarketplace` / takım `opengraph-image`; `rateLimit.ts`; seed `externalUrls`
+- [x] Phase 20: `ExternalLinks` + `projectCreateSchema` / `buildProjectExternalUrls` / `parseExternalUrls` / `mapProjectRowToTeamAd` — `portfolioUrl`, `projectUrl`; `PostTeamAdForm` isteğe bağlı iki URL; `AdDetailClient` “Proje Hakkında” kartı, sağ “Bağlantılar” kartı (lucide), etiket kartından dış link kaldırma, grid `gap-8`
+- [x] Phase 21: `AdminAnnouncementsClient` modal `max-h-[85vh]` / `85dvh` + gövde `overflow-y-auto`; `TeamAdsMarketplace` kart `onClick` + klavye, iç `stopPropagation`; `LandingSections` “Yönetim Paneli”; `SiteHeader` fixed + scroll yönü ile gizle/göster + yer tutucu; header gizlenince mobil menü kapanır
+- [x] Phase 22: `src/components/transitions/PageWipe.tsx` (portal + slate tam ekran, alttan → duraklama → yukarı çıkış); `app/template.tsx` yalnızca `PageWipe` + çocuklar; eski cyan wipe + içerik `AnimatePresence`/`usePathname` wipeKey kaldırıldı
 
 ### In Progress
 - (boş)

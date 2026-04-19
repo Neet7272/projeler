@@ -1,7 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { springReveal, springTap } from "@/lib/motion";
@@ -18,6 +17,7 @@ function uniqTags(teamAds: TeamAd[]) {
 }
 
 export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const teamAds = props.projects;
   const [query, setQuery] = useState("");
@@ -164,7 +164,10 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
           {filtered.map((ad) => (
             <motion.article
               key={ad.id}
-              className="relative rounded-2xl border border-slate-200/65 bg-white/90 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-shadow duration-300 before:pointer-events-none before:absolute before:inset-x-4 before:top-0 before:h-px before:rounded-full before:bg-gradient-to-r before:from-transparent before:via-cyan-400/25 before:to-transparent hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]"
+              role="link"
+              tabIndex={0}
+              aria-label={`${ad.title} — detay sayfasına git`}
+              className="group relative cursor-pointer rounded-2xl border border-slate-200/65 bg-white/90 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-shadow duration-300 before:pointer-events-none before:absolute before:inset-x-4 before:top-0 before:h-px before:rounded-full before:bg-gradient-to-r before:from-transparent before:via-cyan-400/25 before:to-transparent hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]"
               variants={itemVariants}
               transition={
                 reduceMotion
@@ -181,15 +184,19 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                   ? undefined
                   : { scale: 0.994, transition: springTap }
               }
+              onClick={() => router.push(`/takim-ilanlari/${ad.id}`)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  router.push(`/takim-ilanlari/${ad.id}`);
+                }
+              }}
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
-                  <Link
-                    href={`/takim-ilanlari/${ad.id}`}
-                    className="text-lg font-semibold tracking-tight text-slate-900 transition-colors duration-200 hover:text-cyan-800"
-                  >
+                  <p className="text-lg font-semibold tracking-tight text-slate-900 transition-colors duration-200 group-hover:text-cyan-800">
                     {ad.title}
-                  </Link>
+                  </p>
                   {ad.tagline ? (
                     <p className="mt-1.5 line-clamp-2 text-sm font-medium leading-snug text-cyan-900/85">
                       {ad.tagline}
@@ -213,7 +220,10 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                   <button
                     key={t}
                     type="button"
-                    onClick={() => setTag(t)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setTag(t);
+                    }}
                     className="inline-flex min-h-11 max-w-full items-center rounded-full bg-slate-100 px-4 text-xs font-medium text-slate-700 transition-colors duration-200 hover:bg-slate-200/90 hover:text-slate-900"
                   >
                     {t}
@@ -228,10 +238,22 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
               </div>
 
               <div className="mt-6 flex gap-3">
-                <Button href={`/takim-ilanlari/${ad.id}`} variant="primary">
+                <Button
+                  variant="primary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    router.push(`/takim-ilanlari/${ad.id}`);
+                  }}
+                >
                   Detay
                 </Button>
-                <Button variant="secondary" onClick={comingSoon}>
+                <Button
+                  variant="secondary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    comingSoon();
+                  }}
+                >
                   Kaydet
                 </Button>
               </div>
