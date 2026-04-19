@@ -1,6 +1,8 @@
 import { FadeUp } from "@/components/dashboard/FadeUp";
 import { StatCard } from "@/components/dashboard/StatCard";
 import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
+import { cardMatte } from "@/lib/uiClasses";
 
 const mock = {
   stats: [
@@ -21,12 +23,12 @@ export default function DashboardPage() {
       <FadeUp>
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <p className="text-sm font-medium text-[var(--muted)]">Genel Bakış</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
+            <p className="text-sm font-medium text-slate-500">Genel Bakış</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
               Dashboard
             </h2>
-            <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
-              Her şey tek rolde: <span className="text-[var(--foreground)]">Member</span>.
+            <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+              Her şey tek rolde: <span className="font-medium text-slate-900">Member</span>.
               İlan oluştur, başvur, profilini güncel tut.
             </p>
           </div>
@@ -36,7 +38,7 @@ export default function DashboardPage() {
         </div>
       </FadeUp>
 
-      <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-3">
+      <div className="mt-10 grid grid-cols-1 gap-4 sm:mt-12 sm:grid-cols-3 sm:gap-5">
         {mock.stats.map((s, idx) => (
           <FadeUp key={s.label} delay={idx * 0.05}>
             <StatCard label={s.label} value={s.value} hint={s.hint} />
@@ -44,16 +46,16 @@ export default function DashboardPage() {
         ))}
       </div>
 
-      <div className="mt-10 rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6 sm:mt-12">
-        <p className="text-sm font-medium text-[var(--muted)]">Son Aktiviteler</p>
+      <div className={cn("mt-10 p-6 sm:mt-12", cardMatte)}>
+        <p className="text-sm font-medium text-slate-500">Son Aktiviteler</p>
         <ul className="mt-4 space-y-3">
           {mock.recentActivity.map((a) => (
             <li
               key={a.title}
-              className="flex items-center justify-between gap-4 rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3"
+              className="flex items-center justify-between gap-4 rounded-xl border border-slate-200/60 bg-slate-50/90 px-4 py-3 transition-colors duration-200 hover:border-sky-500/20"
             >
-              <span className="text-sm text-[var(--foreground)]/90">{a.title}</span>
-              <span className="text-xs text-[var(--muted)]">{a.when}</span>
+              <span className="text-sm text-slate-800">{a.title}</span>
+              <span className="shrink-0 text-xs text-slate-500">{a.when}</span>
             </li>
           ))}
         </ul>
@@ -61,4 +63,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

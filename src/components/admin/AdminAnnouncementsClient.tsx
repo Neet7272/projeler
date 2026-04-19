@@ -18,6 +18,7 @@ import {
 } from "@/lib/announcementMappers";
 import { CloudinaryImageField } from "@/components/media/CloudinaryImageField";
 import { cn } from "@/lib/cn";
+import { cardMatte } from "@/lib/uiClasses";
 import { useMediaQuery } from "@/lib/useMediaQuery";
 import {
   createAnnouncement,
@@ -213,7 +214,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
   }
 
   const panelClass = cn(
-    "border border-[var(--hairline)] bg-[var(--background)]",
+    "border border-slate-200/75 bg-white shadow-[var(--shadow-matte-hover)] backdrop-blur-md",
     isMobile
       ? "absolute inset-x-0 bottom-0 rounded-t-3xl"
       : "w-[min(92vw,560px)] rounded-3xl"
@@ -223,11 +224,11 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
     <div>
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
         <div>
-          <p className="text-sm font-medium text-[var(--muted)]">Admin</p>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
+          <p className="text-sm font-medium text-slate-500">Admin</p>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
             Duyurular
           </h1>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
             Duyuruları yönet. Öncelik seviyesi minimal ama net.
           </p>
         </div>
@@ -236,14 +237,14 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
         </Button>
       </div>
 
-      <div className="mt-10 rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-2 sm:mt-12">
-        <ul className="divide-y divide-[var(--hairline)]">
+      <div className={cn("mt-10 p-2 sm:mt-12", cardMatte)}>
+        <ul className="divide-y divide-slate-200/70">
           {initialItems.map((a) => (
             <li key={a.id} className="p-4 sm:p-5">
               <div className="flex items-start justify-between gap-6">
                 <div className="min-w-0">
                   {a.coverImageUrl ? (
-                    <div className="mb-4 overflow-hidden rounded-2xl border border-[var(--hairline)] bg-[var(--surface)]">
+                    <div className="mb-4 overflow-hidden rounded-2xl border border-slate-200/65 bg-slate-50">
                       <div className="relative h-36 w-full">
                         <Image
                           src={a.coverImageUrl}
@@ -264,14 +265,14 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                       )}
                       aria-hidden="true"
                     />
-                    <p className="text-sm font-semibold text-[var(--foreground)]">
+                    <p className="text-sm font-semibold tracking-tight text-slate-900">
                       {a.title}
                     </p>
                   </div>
-                  <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+                  <p className="mt-2 text-sm leading-6 text-slate-600">
                     {a.content}
                   </p>
-                  <p className="mt-3 text-xs text-[var(--muted)]">
+                  <p className="mt-3 text-xs text-slate-500">
                     {prismaCategoryToUiLabel(a.category)} • {a.createdAt} •{" "}
                     {a.id}
                   </p>
@@ -333,7 +334,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
               role="dialog"
               aria-modal="true"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-[var(--hairline)] px-6 py-5">
+              <div className="flex items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
                 <div>
                   <p className="text-xs font-medium text-[var(--muted)]">
                     Duyuru
@@ -344,7 +345,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                 </div>
                 <button
                   type="button"
-                  className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  className="flex min-h-11 min-w-11 items-center justify-center rounded-full border border-slate-200/70 bg-white/90 px-4 py-2 text-sm text-slate-600 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                   onClick={() => setOpen(false)}
                 >
                   Kapat
@@ -378,7 +379,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         rows={5}
-                        className="w-full resize-none rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3 text-sm text-[var(--foreground)]/90 placeholder:text-[var(--muted)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+                        className="w-full resize-none rounded-xl border border-slate-200/80 bg-white/90 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                         placeholder="Net ve kısa bir açıklama yaz."
                       />
                     </div>
@@ -401,7 +402,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                             e.target.value as AnnouncementCategoryUiLabel
                           )
                         }
-                        className="h-11 w-full rounded-xl border border-[var(--hairline)] bg-black/0 px-4 text-sm text-[var(--foreground)]/90 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+                        className="h-11 w-full rounded-xl border border-slate-200/80 bg-white/90 px-4 text-sm text-slate-900 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                       >
                         <option value="Yarışmalar">Yarışmalar</option>
                         <option value="Etkinlikler">Etkinlikler</option>
@@ -477,7 +478,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                         onChange={(e) =>
                           setPriority(e.target.value as AnnouncementPriority)
                         }
-                        className="h-11 w-full rounded-xl border border-[var(--hairline)] bg-black/0 px-4 text-sm text-[var(--foreground)]/90 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+                        className="h-11 w-full rounded-xl border border-slate-200/80 bg-white/90 px-4 text-sm text-slate-900 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                       >
                         <option value="High">High</option>
                         <option value="Normal">Normal</option>
@@ -551,7 +552,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
               role="dialog"
               aria-modal="true"
             >
-              <div className="flex items-start justify-between gap-4 border-b border-[var(--hairline)] px-6 py-5">
+              <div className="flex items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
                 <div>
                   <p className="text-xs font-medium text-[var(--muted)]">Onay</p>
                   <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">
@@ -560,7 +561,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                 </div>
                 <button
                   type="button"
-                  className="rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  className="rounded-full border border-slate-200/70 bg-white/90 px-3 py-1.5 text-sm text-slate-600 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                   onClick={() => setConfirmDeleteId(null)}
                 >
                   Kapat

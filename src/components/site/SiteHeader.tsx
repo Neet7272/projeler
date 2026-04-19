@@ -32,11 +32,11 @@ export function SiteHeader() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-[var(--hairline)] bg-[color:color-mix(in_oklab,var(--background),transparent_25%)] backdrop-blur supports-[backdrop-filter]:bg-[color:color-mix(in_oklab,var(--background),transparent_25%)]">
+    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-[color:color-mix(in_oklab,var(--background),transparent_18%)] backdrop-blur-md supports-[backdrop-filter]:bg-[color:color-mix(in_oklab,var(--background),transparent_18%)]">
       <div className="mx-auto flex min-h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
-          className="flex min-h-11 min-w-0 items-center text-sm font-semibold tracking-tight text-[var(--foreground)]"
+          className="flex min-h-11 min-w-0 items-center text-sm font-semibold tracking-tight text-slate-900"
         >
           Ar-Ge İnovasyon Kulübü
         </Link>

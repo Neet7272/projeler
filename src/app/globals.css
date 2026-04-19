@@ -1,26 +1,29 @@
 @import "tailwindcss";
 
 :root {
-  /* Modern minimalist: anthracite / slate, clean white, cyan–sky accent */
-  --background: #f8fafc;
-  --foreground: #0c1222;
-  --muted: rgba(12, 18, 34, 0.58);
-  --hairline: rgba(15, 23, 42, 0.1);
-  --surface: rgba(15, 23, 42, 0.035);
-  --primary: #0891b2; /* cyan-600 */
+  /* Premium off-white canvas + editorial contrast */
+  --background: #fafafa;
+  --foreground: #0f172a;
+  --muted: #64748b;
+  --muted-strong: #475569;
+  --hairline: rgb(226 232 240 / 0.72);
+  --surface: rgb(255 255 255 / 0.72);
+  --card: #ffffff;
+  --primary: #0891b2;
   --primary-foreground: #ffffff;
   --ring: rgba(8, 145, 178, 0.38);
   --accent-blue: #0ea5e9;
+  --shadow-matte: 0 4px 24px rgb(15 23 42 / 0.04);
+  --shadow-matte-hover: 0 14px 44px rgb(15 23 42 / 0.07);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
 }
-
-/* Phase 6 pivot: light theme is default. */
 
 *,
 *::before,
@@ -31,8 +34,21 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system,
-    "Segoe UI", Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+    Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+  font-feature-settings: "ss01" on, "cv01" on;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display), var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  color: #0f172a;
 }
 
 html,
@@ -45,11 +61,12 @@ body {
 }
 
 .prose-custom {
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  color: var(--muted-strong);
 }
 
 .prose-custom p:first-of-type::first-letter {
-  font-size: 1.15em;
+  font-size: 1.12em;
   font-weight: 600;
-  color: var(--foreground);
+  color: #0f172a;
 }

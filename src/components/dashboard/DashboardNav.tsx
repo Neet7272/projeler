@@ -17,7 +17,7 @@ export function DashboardNav(props: { variant?: "top" | "sidebar" } = {}) {
   return (
     <nav
       className={cn(
-        "text-sm text-[var(--muted)]",
+        "text-sm text-slate-600",
         variant === "top" && "flex items-center gap-1",
         variant === "sidebar" && "flex flex-col gap-1"
       )}
@@ -30,10 +30,10 @@ export function DashboardNav(props: { variant?: "top" | "sidebar" } = {}) {
             href={i.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "transition-colors hover:text-[var(--foreground)]",
+              "transition-colors duration-200 hover:text-slate-900",
               variant === "top" && "rounded-full px-3 py-2",
               variant === "sidebar" && "rounded-xl px-3 py-2",
-              active && "bg-[var(--surface)] text-[var(--foreground)]"
+              active && "bg-slate-100 font-medium text-slate-900"
             )}
           >
             {i.label}

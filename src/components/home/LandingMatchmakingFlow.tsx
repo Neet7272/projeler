@@ -26,6 +26,9 @@ const steps = [
   },
 ] as const;
 
+const stepCardClass =
+  "relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/65 bg-white/85 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]";
+
 /**
  * Tek responsive grid — aynı adımların iki kez (masaüstü + mobil) map edilmesi yok.
  */
@@ -33,23 +36,23 @@ export function LandingMatchmakingFlow() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative border-y border-[var(--hairline)] bg-[color:color-mix(in_oklab,var(--foreground),transparent_97%)] py-16 sm:py-24">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(800px_400px_at_50%_0%,rgba(6,182,212,0.08),transparent_55%)]" />
+    <section className="relative border-y border-slate-200/50 bg-[color:color-mix(in_oklab,#f8fafc,white_40%)] py-24 sm:py-32">
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(900px_420px_at_50%_0%,rgba(6,182,212,0.08),transparent_58%)]" />
       <div className="relative mx-auto w-full max-w-6xl px-4 sm:px-6">
         <div className="max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted)]">
+          <p className="text-xs font-semibold uppercase tracking-[0.22em] text-slate-500">
             Nasıl çalışır?
           </p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
             Ekip arama & ilan verme
           </h2>
-          <p className="mt-4 text-base leading-7 text-[var(--muted)] sm:text-lg">
+          <p className="mt-4 text-base leading-7 text-slate-600 sm:text-lg">
             Profil → vitrin → başvuru veya ilan → moderasyon sonrası görünürlük. Aşağıdaki
             adımlar akışı özetler.
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-5">
+        <div className="mt-14 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-20 lg:grid-cols-4 lg:gap-5">
           {steps.map((s, i) => {
             const Icon = s.icon;
             return (
@@ -59,17 +62,17 @@ export function LandingMatchmakingFlow() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.4, delay: reduce ? 0 : i * 0.06 }}
-                className="relative flex flex-col rounded-2xl border border-cyan-500/15 bg-[var(--background)] p-6 shadow-[0_0_0_1px_rgba(34,211,238,0.06)]"
+                className={stepCardClass}
               >
-                <div className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
-                <div className="flex min-h-11 min-w-11 items-center justify-center self-start rounded-xl border border-cyan-500/25 bg-cyan-500/10 text-cyan-600">
+                <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent" />
+                <div className="flex min-h-11 min-w-11 items-center justify-center self-start rounded-xl border border-cyan-500/20 bg-cyan-500/[0.08] text-cyan-700">
                   <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
                 </div>
                 <p className="mt-4 text-xs font-semibold text-cyan-700/90">
                   {String(i + 1).padStart(2, "0")}
                 </p>
-                <h3 className="mt-1 text-lg font-semibold text-[var(--foreground)]">{s.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-7 text-[var(--muted)]">{s.body}</p>
+                <h3 className="mt-1 text-lg font-semibold tracking-tight text-slate-900">{s.title}</h3>
+                <p className="mt-2 flex-1 text-sm leading-7 text-slate-600">{s.body}</p>
               </motion.article>
             );
           })}

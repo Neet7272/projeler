@@ -5,6 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useState } from "react";
 import { DashboardNav } from "@/components/dashboard/DashboardNav";
 import { cn } from "@/lib/cn";
+import { cardMatte } from "@/lib/uiClasses";
 
 export function DashboardShell(props: {
   memberName: string;
@@ -15,14 +16,14 @@ export function DashboardShell(props: {
 
   return (
     <div className="min-h-[calc(100vh-4rem)]">
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 px-6 py-8 sm:py-10 lg:grid-cols-[240px_1fr]">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-8 px-6 py-10 sm:py-12 lg:grid-cols-[240px_1fr]">
         <aside className="hidden lg:block">
-          <div className="sticky top-20 rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-4">
+          <div className={cn("sticky top-20 p-4", cardMatte)}>
             <div className="px-2 py-3">
-              <p className="text-xs font-medium text-[var(--muted)]">
+              <p className="text-xs font-medium text-slate-500">
                 Member Area
               </p>
-              <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">
+              <p className="mt-2 text-sm font-semibold tracking-tight text-slate-900">
                 {props.memberName}
               </p>
             </div>
@@ -34,7 +35,7 @@ export function DashboardShell(props: {
             <div className="mt-4 px-2">
               <Link
                 href="/"
-                className="inline-flex w-full items-center justify-between rounded-xl border border-[var(--hairline)] bg-black/0 px-3 py-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+                className="inline-flex w-full items-center justify-between rounded-xl border border-slate-200/70 bg-slate-50/80 px-3 py-2 text-sm text-slate-600 transition-colors duration-200 hover:border-sky-500/20 hover:text-slate-900"
               >
                 <span>Site</span>
                 <span className="text-xs">↩</span>
@@ -48,12 +49,12 @@ export function DashboardShell(props: {
             <button
               type="button"
               onClick={() => setOpen(true)}
-              className="rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-4 py-2 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+              className="rounded-full border border-slate-200/70 bg-white/90 px-4 py-2 text-sm text-slate-600 shadow-[var(--shadow-matte)] transition-colors duration-200 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
               aria-label="Menüyü aç"
             >
               Menü
             </button>
-            <p className="text-sm font-medium text-[var(--muted)]">
+            <p className="text-sm font-medium text-slate-600">
               {props.memberName}
             </p>
           </div>
@@ -80,7 +81,7 @@ export function DashboardShell(props: {
             <motion.aside
               className={cn(
                 "absolute inset-y-0 left-0 w-[min(88vw,320px)]",
-                "border-r border-[var(--hairline)] bg-[var(--background)]"
+                "border-r border-slate-200/70 bg-[var(--background)]"
               )}
               initial={reduceMotion ? { x: 0 } : { x: "-100%" }}
               animate={{ x: 0 }}
@@ -92,13 +93,13 @@ export function DashboardShell(props: {
               role="dialog"
               aria-modal="true"
             >
-              <div className="flex h-16 items-center justify-between border-b border-[var(--hairline)] px-5">
-                <p className="text-sm font-semibold text-[var(--foreground)]">
+              <div className="flex h-16 items-center justify-between border-b border-slate-200/70 px-5">
+                <p className="text-sm font-semibold tracking-tight text-slate-900">
                   Menü
                 </p>
                 <button
                   type="button"
-                  className="rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  className="rounded-full border border-slate-200/70 bg-white/90 px-3 py-1.5 text-sm text-slate-600 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                   onClick={() => setOpen(false)}
                 >
                   Kapat
@@ -106,11 +107,11 @@ export function DashboardShell(props: {
               </div>
 
               <div className="p-5">
-                <div className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-4">
-                  <p className="text-xs font-medium text-[var(--muted)]">
+                <div className={cn("p-4", cardMatte)}>
+                  <p className="text-xs font-medium text-slate-500">
                     Member Area
                   </p>
-                  <p className="mt-2 text-sm font-semibold text-[var(--foreground)]">
+                  <p className="mt-2 text-sm font-semibold tracking-tight text-slate-900">
                     {props.memberName}
                   </p>
                   <div className="mt-3">
@@ -121,7 +122,7 @@ export function DashboardShell(props: {
                 <div className="mt-4">
                   <Link
                     href="/"
-                    className="inline-flex w-full items-center justify-between rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] px-4 py-3 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)]"
+                    className="inline-flex w-full items-center justify-between rounded-2xl border border-slate-200/70 bg-white/90 px-4 py-3 text-sm text-slate-600 shadow-[var(--shadow-matte)] transition-colors hover:text-slate-900"
                     onClick={() => setOpen(false)}
                   >
                     <span>Siteye dön</span>

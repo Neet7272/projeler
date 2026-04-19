@@ -11,7 +11,7 @@
 
 ## Core Features Status Tracker
 - **Routing & Layout baseline**: Fully Working
-- **Tailwind setup + theme**: Fully Working
+- **Tailwind setup + theme**: Fully Working (Phase 15: mat gölge token’ları, off-white zemin, slate tipografi tonları)
 - **Framer Motion base primitives**: Fully Working
 - **Public pages (Home, Announcements, Team Ads)**: Fully Working
 - **Member dashboard UI**: Fully Working (oturum zorunlu)
@@ -79,9 +79,23 @@
 - **Hero etkileşim**: Fully Working (`HeroBackdrop` + mevcut partiküller)
 - **Auth sıkılığı**: Fully Working (Credentials kaldırıldı; `registerWithCredentials` kapalı; girişte KVKK/sözleşme onayı)
 - **Edge admin rolü**: Fully Working (`src/lib/authRole.ts` + `auth.config` / `auth` JWT normalizasyonu; `ADMIN_EMAILS`)
-- **Hukuk sayfaları + footer**: Fully Working (`/kvkk`, `/sozlesme`, `SiteFooter`)
+- **Hukuk sayfaları**: Fully Working (`/kvkk`, `/sozlesme`; auth onayı; footer’da yasal link yok — Phase 14)
+- **Site footer (Phase 14)**: Fully Working — üç sütun (marka, hızlı bağlantılar, WhatsApp + Instagram), slate arka plan, hover vurguları
 - **Moderasyon şeffaflığı (24 saat metni)**: Fully Working (`PostTeamAdForm` toast + `TeamAdsMarketplace` boş durum)
 - **Mobil dokunma (≥44px)**: Fully Working (filtre chip’leri ve etiket kontrolleri turu)
+
+## Phase 14 (Footer & sosyal) Status
+- **Profesyonel çok sütunlu footer**: Fully Working (`SiteFooter`: marka metni, `/` `/duyurular` `/proje-vitrini` `/hakkimizda`, WhatsApp + Instagram; yasal linkler footer’dan kaldırıldı)
+- **Hover / vurgu**: Fully Working (cyan geçişi, hafif `-translate-y`)
+- **Global layout**: Fully Working (`src/app/layout.tsx` içinde `SessionProvider` altında tüm sayfalarda)
+
+## Phase 15 (UI mimari overhaul) Status
+- **Tipografi**: Fully Working (Plus Jakarta Sans başlıklar, Inter gövde; `globals.css` h1–h6 + slate-900/600)
+- **Kart & buton**: Fully Working (mat gölge, `border-slate-200/65`, hover lift + sky/cyan border; birincil buton inset glow + `active:scale-[0.97]`)
+- **Hero & landing**: Fully Working (iki sütun + `HeroTechGraphic`, üst düzey `py-24/32`, gelişmiş arka plan gradient’i)
+- **Duyurular**: Fully Working (şerit kartları `aspect-video` üst kapak; kategori grid dikey kartlar)
+- **Vitrin**: Fully Working (`TeamAdsMarketplace` kartlar + slate etiket pill’leri)
+- **Dashboard & Admin UI (Phase 15b)**: Fully Working (`cardMatte` / `StatCard` hover; yan menü + moderasyon + duyuru CRUD yüzeyleri vitrin ile hizalı)
 
 ## Known Bugs & Technical Debt
 - Google dışı yerel seed kullanıcıları: giriş için Google OAuth veya DB’de aynı e-posta ile hesap; isteğe bağlı `ADMIN_EMAILS` ile admin menü erişimi.

@@ -10,6 +10,8 @@ import { Input } from "@/components/ui/Input";
 import { Toast, type ToastState } from "@/components/ui/Toast";
 import { CloudinaryImageField } from "@/components/media/CloudinaryImageField";
 import { updateUserProfile } from "@/actions/userActions";
+import { cn } from "@/lib/cn";
+import { cardMatte } from "@/lib/uiClasses";
 
 const suggestedTags = [
   "Unity",
@@ -114,19 +116,19 @@ export function ProfileSettingsClient({ user }: Props) {
   return (
     <div className="max-w-3xl">
       <FadeUp>
-        <p className="text-sm font-medium text-[var(--muted)]">Ayarlar</p>
-        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
+        <p className="text-sm font-medium text-slate-500">Ayarlar</p>
+        <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
           Profil
         </h2>
-        <p className="mt-3 text-base leading-7 text-[var(--muted)]">
+        <p className="mt-3 text-base leading-7 text-slate-600">
           Yeteneklerin ve portfolyo linklerin hesabına kaydedilir.
         </p>
       </FadeUp>
 
       <div className="mt-10 space-y-4">
-        <section className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6">
-          <p className="text-sm font-medium text-[var(--muted)]">Profil fotoğrafı</p>
-          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+        <section className={cn("p-6", cardMatte)}>
+          <p className="text-sm font-medium text-slate-500">Profil fotoğrafı</p>
+          <p className="mt-2 text-sm leading-6 text-slate-600">
             Cloudinary ile yükle; oturum ve vitrin görünürlüğünde kullanılır.
           </p>
           <div className="mt-4 max-w-md">
@@ -139,33 +141,33 @@ export function ProfileSettingsClient({ user }: Props) {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6">
-          <p className="text-sm font-medium text-[var(--muted)]">Kimlik</p>
+        <section className={cn("p-6", cardMatte)}>
+          <p className="text-sm font-medium text-slate-500">Kimlik</p>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 Ad Soyad
               </label>
-              <div className="mt-2 rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3 text-sm text-[var(--foreground)]/90">
+              <div className="mt-2 rounded-xl border border-slate-200/70 bg-slate-50/90 px-4 py-3 text-sm text-slate-800">
                 {user.name}
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 E-posta
               </label>
-              <div className="mt-2 rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3 text-sm text-[var(--foreground)]/90">
+              <div className="mt-2 rounded-xl border border-slate-200/70 bg-slate-50/90 px-4 py-3 text-sm text-slate-800">
                 {user.email}
               </div>
             </div>
           </div>
         </section>
 
-        <section className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6">
-          <p className="text-sm font-medium text-[var(--muted)]">
+        <section className={cn("p-6", cardMatte)}>
+          <p className="text-sm font-medium text-slate-500">
             Yetenek Etiketleri
           </p>
-          <p className="mt-2 text-sm leading-6 text-[var(--muted)]">
+          <p className="mt-2 text-sm leading-6 text-slate-600">
             Etiketleri ekle veya çıkar.
           </p>
 
@@ -187,13 +189,13 @@ export function ProfileSettingsClient({ user }: Props) {
                       : { opacity: 0, scale: 0.98, y: 4, filter: "blur(6px)" }
                   }
                   transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-                  className="inline-flex items-center gap-2 rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1 text-xs text-[var(--muted)]"
+                  className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-3 py-1.5 text-xs text-slate-700"
                 >
-                  <span className="text-[var(--foreground)]/80">{t}</span>
+                  <span className="font-medium text-slate-800">{t}</span>
                   <button
                     type="button"
                     onClick={() => removeSkill(t)}
-                    className="rounded-full border border-[var(--hairline)] bg-black/0 px-2 py-0.5 text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full text-sm text-slate-500 transition-colors hover:bg-slate-200/80 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                     aria-label={`${t} etiketini kaldır`}
                   >
                     ×
@@ -205,7 +207,7 @@ export function ProfileSettingsClient({ user }: Props) {
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="flex-1">
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 Yeni etiket
               </label>
               <div className="mt-2">
@@ -232,7 +234,7 @@ export function ProfileSettingsClient({ user }: Props) {
           </div>
 
           <div className="mt-6">
-            <p className="text-xs font-medium text-[var(--muted)]">
+            <p className="text-xs font-medium text-slate-500">
               Önerilen etiketler
             </p>
             <div className="mt-3 flex flex-wrap gap-2">
@@ -241,7 +243,7 @@ export function ProfileSettingsClient({ user }: Props) {
                   type="button"
                   key={t}
                   onClick={() => addSkill(t)}
-                  className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1 text-left text-xs text-[var(--foreground)]/80 transition-colors hover:bg-[var(--surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  className="inline-flex min-h-11 items-center rounded-full bg-slate-100 px-4 text-left text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 >
                   {t}
                 </button>
@@ -250,11 +252,11 @@ export function ProfileSettingsClient({ user }: Props) {
           </div>
         </section>
 
-        <section className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6">
-          <p className="text-sm font-medium text-[var(--muted)]">Portfolyo</p>
+        <section className={cn("p-6", cardMatte)}>
+          <p className="text-sm font-medium text-slate-500">Portfolyo</p>
           <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div>
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 GitHub
               </label>
               <div className="mt-2">
@@ -266,7 +268,7 @@ export function ProfileSettingsClient({ user }: Props) {
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 LinkedIn
               </label>
               <div className="mt-2">
@@ -278,7 +280,7 @@ export function ProfileSettingsClient({ user }: Props) {
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 Website
               </label>
               <div className="mt-2">
@@ -290,7 +292,7 @@ export function ProfileSettingsClient({ user }: Props) {
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 Behance
               </label>
               <div className="mt-2">

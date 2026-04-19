@@ -28,13 +28,21 @@ export function Button(props: ButtonProps) {
   const variant = props.variant ?? "primary";
 
   const classes = cn(
-    "inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium",
-    "transition-colors duration-200",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-0",
+    "inline-flex h-11 min-h-11 select-none items-center justify-center gap-2 rounded-full px-5 text-sm font-semibold",
+    "transition-all duration-300 ease-out active:scale-[0.97]",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
     variant === "primary" &&
-      "bg-[var(--primary)] text-[var(--primary-foreground)] hover:opacity-90",
+      cn(
+        "bg-[var(--primary)] text-[var(--primary-foreground)]",
+        "shadow-[inset_0_1px_0_rgb(255,255,255,0.22),0_1px_0_rgb(15,23,42,0.06),0_4px_14px_rgb(8,145,178,0.28)]",
+        "hover:brightness-[1.05] hover:shadow-[inset_0_1px_0_rgb(255,255,255,0.25),0_2px_0_rgb(15,23,42,0.05),0_8px_24px_rgb(8,145,178,0.35)]"
+      ),
     variant === "secondary" &&
-      "border border-[var(--hairline)] bg-transparent text-[var(--foreground)] hover:bg-[var(--surface)]",
+      cn(
+        "border border-slate-200/80 bg-white/90 text-slate-800",
+        "shadow-[0_4px_20px_rgb(15,23,42,0.03)]",
+        "hover:border-sky-500/25 hover:bg-white hover:text-slate-900 hover:shadow-[0_8px_28px_rgb(15,23,42,0.05)]"
+      ),
     props.className
   );
 
@@ -58,4 +66,3 @@ export function Button(props: ButtonProps) {
     </button>
   );
 }
-

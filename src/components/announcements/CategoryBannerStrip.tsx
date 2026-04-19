@@ -19,6 +19,9 @@ type Props = {
   items: Announcement[];
 };
 
+const cardClass =
+  "snap-start shrink-0 w-[min(88vw,340px)] overflow-hidden rounded-2xl border border-slate-200/65 bg-white/90 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:shadow-[var(--shadow-matte-hover)]";
+
 export function CategoryBannerStrip({ category, items }: Props) {
   const reduce = useReducedMotion();
   const meta = CATEGORY_STRIP_META[category];
@@ -36,26 +39,26 @@ export function CategoryBannerStrip({ category, items }: Props) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-      className="relative overflow-hidden border-y border-[var(--hairline)] bg-[color:color-mix(in_oklab,var(--surface),#000_12%)] py-12 sm:py-16"
+      className="relative overflow-hidden border-y border-slate-200/50 bg-[color:color-mix(in_oklab,white,#f1f5f9_18%)] py-24 sm:py-28"
     >
       <motion.div
         style={{ y: bgY }}
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 opacity-[0.06]"
         aria-hidden
       >
-        <div className="absolute -left-1/4 top-0 h-[120%] w-[70%] rotate-[-8deg] bg-[radial-gradient(ellipse_at_center,rgba(99,102,241,0.5),transparent_65%)]" />
+        <div className="absolute -left-1/4 top-0 h-[120%] w-[70%] rotate-[-8deg] bg-[radial-gradient(ellipse_at_center,rgba(6,182,212,0.45),transparent_65%)]" />
       </motion.div>
 
       <div className="relative mx-auto w-full max-w-6xl px-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--muted)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
               {meta.title}
             </p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)] sm:text-3xl">
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">
               {meta.title}
             </h2>
-            <p className="mt-2 max-w-xl text-sm leading-6 text-[var(--muted)] sm:text-base">
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
               {meta.subtitle}
             </p>
           </div>
@@ -68,9 +71,9 @@ export function CategoryBannerStrip({ category, items }: Props) {
           </Button>
         </div>
 
-        <div className="mt-8 flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-10 sm:gap-5 [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
+        <div className="mt-10 flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-12 sm:gap-5 [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
           {items.length === 0 ? (
-            <p className="snap-start text-sm text-[var(--muted)]">
+            <p className="snap-start text-sm text-slate-600">
               Bu kategoride henüz duyuru yok.
             </p>
           ) : (
@@ -85,28 +88,28 @@ export function CategoryBannerStrip({ category, items }: Props) {
                   duration: 0.4,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="snap-start shrink-0 w-[min(88vw,340px)] overflow-hidden rounded-2xl border border-[var(--hairline)] bg-[var(--background)] shadow-lg"
+                className={cardClass}
               >
                 <Link href={`/duyurular/${a.id}`} className="block">
                   {a.coverImageUrl ? (
-                    <div className="relative h-44 w-full">
+                    <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                       <Image
                         src={a.coverImageUrl}
                         alt=""
                         fill
-                        className="object-cover transition-transform duration-500 hover:scale-[1.03]"
+                        className="object-cover transition-transform duration-500 ease-out hover:scale-[1.02]"
                         sizes="340px"
                       />
                     </div>
                   ) : (
-                    <div className="h-24 bg-[color:color-mix(in_oklab,var(--surface),transparent_40%)]" />
+                    <div className="aspect-video w-full bg-gradient-to-br from-slate-100 to-slate-200/80" />
                   )}
                   <div className="p-5">
-                    <p className="text-xs text-[var(--muted)]">{a.createdAt}</p>
-                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug text-[var(--foreground)]">
+                    <p className="text-xs text-slate-500">{a.createdAt}</p>
+                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug tracking-tight text-slate-900">
                       {a.title}
                     </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-[var(--muted)]">
+                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
                       {a.content}
                     </p>
                   </div>

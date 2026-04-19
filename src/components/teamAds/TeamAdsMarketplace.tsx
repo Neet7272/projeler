@@ -79,15 +79,15 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
       };
 
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-14 sm:py-20">
+    <div className="mx-auto w-full max-w-6xl px-6 py-24 sm:py-28">
       <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
         <div>
-          <p className="text-sm font-medium text-[var(--muted)]">Vitrin</p>
-          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
+          <p className="text-sm font-medium text-slate-500">Vitrin</p>
+          <h1 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl">
             Proje Vitrini
           </h1>
-          <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
-            Filtrele, keşfet, başvur. Premium minimal kartlar; hızlı karar.
+          <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
+            Filtrele, keşfet, başvur. Yapısal kartlar ve net hiyerarşi ile hızlı karar.
           </p>
         </div>
         <div className="flex flex-col gap-3 sm:flex-row">
@@ -102,11 +102,11 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
 
       <div className="mt-10 grid grid-cols-1 gap-6 lg:mt-12 lg:grid-cols-[240px_1fr] lg:gap-8">
         <aside className="lg:sticky lg:top-20 lg:h-fit">
-          <div className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-5">
-            <p className="text-sm font-semibold text-[var(--foreground)]">Filtre</p>
+          <div className="rounded-2xl border border-slate-200/65 bg-white/85 p-5 shadow-[var(--shadow-matte)] backdrop-blur-sm">
+            <p className="text-sm font-semibold tracking-tight text-slate-900">Filtre</p>
 
             <div className="mt-4">
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 Arama
               </label>
               <div className="mt-2">
@@ -119,16 +119,16 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
             </div>
 
             <div className="mt-5">
-              <p className="text-xs font-medium text-[var(--muted)]">Etiket</p>
+              <p className="text-xs font-medium text-slate-500">Etiket</p>
               <div className="mt-3 flex flex-wrap gap-2">
                 <button
                   type="button"
                   onClick={() => setTag(null)}
                   className={
-                    "inline-flex min-h-11 items-center rounded-full border border-[var(--hairline)] px-4 text-xs transition-colors " +
+                    "inline-flex min-h-11 items-center rounded-full px-4 text-xs font-medium transition-all duration-200 " +
                     (selectedTag === null
-                      ? "bg-[var(--surface)] text-[var(--foreground)]"
-                      : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]")
+                      ? "bg-slate-900 text-white shadow-[0_2px_8px_rgb(15,23,42,0.12)]"
+                      : "bg-slate-100 text-slate-700 hover:bg-slate-200/90")
                   }
                 >
                   Hepsi
@@ -139,10 +139,10 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                     type="button"
                     onClick={() => setTag(t)}
                     className={
-                      "inline-flex min-h-11 max-w-full items-center rounded-full border border-[var(--hairline)] px-4 text-left text-xs transition-colors " +
+                      "inline-flex min-h-11 max-w-full items-center rounded-full px-4 text-left text-xs font-medium transition-all duration-200 " +
                       (selectedTag === t
-                        ? "bg-[var(--surface)] text-[var(--foreground)]"
-                        : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]")
+                        ? "bg-slate-900 text-white shadow-[0_2px_8px_rgb(15,23,42,0.12)]"
+                        : "bg-slate-100 text-slate-700 hover:bg-slate-200/90")
                     }
                   >
                     {t}
@@ -163,7 +163,7 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
           {filtered.map((ad) => (
             <motion.article
               key={ad.id}
-              className="rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-6"
+              className="rounded-2xl border border-slate-200/65 bg-white/90 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]"
               variants={itemVariants}
               transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
             >
@@ -171,20 +171,20 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                 <div className="min-w-0">
                   <Link
                     href={`/takim-ilanlari/${ad.id}`}
-                    className="text-lg font-semibold tracking-tight text-[var(--foreground)] transition-colors hover:text-[var(--foreground)]/90"
+                    className="text-lg font-semibold tracking-tight text-slate-900 transition-colors duration-200 hover:text-cyan-800"
                   >
                     {ad.title}
                   </Link>
-                  <p className="mt-1 text-xs text-[var(--muted)]">
+                  <p className="mt-1 text-xs text-slate-500">
                     {ad.owner.name} • Member
                   </p>
                 </div>
-                <span className="rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1 text-xs font-medium text-[var(--muted)]">
+                <span className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700">
                   {ad.status}
                 </span>
               </div>
 
-              <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
+              <p className="mt-3 text-sm leading-6 text-slate-600">
                 {ad.description}
               </p>
 
@@ -194,15 +194,15 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                     key={t}
                     type="button"
                     onClick={() => setTag(t)}
-                    className="inline-flex min-h-11 max-w-full items-center rounded-full border border-[var(--hairline)] bg-black/0 px-4 text-xs text-[var(--muted)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--foreground)]"
+                    className="inline-flex min-h-11 max-w-full items-center rounded-full bg-slate-100 px-4 text-xs font-medium text-slate-700 transition-colors duration-200 hover:bg-slate-200/90 hover:text-slate-900"
                   >
                     {t}
                   </button>
                 ))}
               </div>
 
-              <div className="mt-5 flex flex-wrap gap-2 text-xs text-[var(--muted)]">
-                <span className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1">
+              <div className="mt-5 flex flex-wrap gap-2 text-xs text-slate-600">
+                <span className="rounded-full bg-slate-100 px-3 py-1.5 font-medium text-slate-700">
                   Aranan: {ad.lookingFor.join(", ")}
                 </span>
               </div>

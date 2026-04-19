@@ -4,9 +4,9 @@
 - When the **Done** list grows, summarize major milestones into `workflow_state.md/archive_log.md` and prune Done here.
 
 ## Current Phase & Objective
-**Phase 13: Enterprise Polish, Security Strictness, and Legal Compliance**
+**Phase 15: Ultimate UI/UX Architectural Overhaul**
 
-Objective: Landing çift render düzeltmesi; minimal tema; Google-only auth + KVKK/sözleşme onayı; Edge’te admin rolü (`ADMIN_EMAILS` + JWT normalizasyonu); footer + `/kvkk` + `/sozlesme`; 24 saat moderasyon metni; mobil ≥44px turu; `npm run build` yeşil.
+Objective: Plus Jakarta + Inter tipografi; mat gölge + `rounded-2xl` kartlar; Hero grid + `HeroTechGraphic`; duyuru kapakları `aspect-video` üst kenar; buton iç parıltı + `active:scale-95`; bölüm `py-24/32`; arka plan `#fafafa`; `log.md` güncellemesi; build yeşil.
 
 ## Active Task Board
 ### To Do
@@ -33,6 +33,9 @@ Objective: Landing çift render düzeltmesi; minimal tema; Google-only auth + KV
 - [x] Phase 11: Auth sayfası (Framer Motion Giriş/Kayıt); kayıt `registerWithCredentials`; duyuru kategorileri + hub + `/duyurular/kategori/[slug]`; admin CRUD kategori + dış başvuru alanları; parallax kapak + blog tipografisi; seed (TEKNOFEST/TÜBİTAK/Ideathon vb.) + admin çıktısı; `requireAuthedMemberUser` + başvuruda sahip kontrolü; proje detay JSON-LD; `lucide-react`; `AnnouncementsPublicClient` kaldırıldı
 - [x] Phase 12: `Google` provider + `PrismaAdapter`; giriş sayfası “Google ile devam et”; `next-cloudinary` + `CloudinaryImageField` (admin duyuru kapak, profil foto); `NetworkParticles` Ar-Ge estetiği; `LandingMatchmakingFlow` + `/hakkimizda` ayrımı; `SiteHeader` mobil drawer; `.env.example`; `res.cloudinary.com` remote image
 - [x] Phase 13: `LandingMatchmakingFlow` tek grid; `HeroBackdrop`; `globals.css` palet; Credentials kaldırıldı; `authRole` + `ADMIN_EMAILS`; `AuthPageClient` yalnız Google + onay kutusu; `SiteFooter` + `/kvkk` + `/sozlesme`; moderasyon 24 saat metni; `TeamAdsMarketplace` / `PostTeamAdForm`; `HowItWorks` silindi
+- [x] Phase 14: `SiteFooter` yeniden tasarım (3 kolon, WhatsApp + Instagram, yüksek kalite SVG ikonlar); yasal linkler footer’dan çıkarıldı; hover cyan + translate; `layout.tsx` zaten `SiteFooter` içeriyor
+- [x] Phase 15: `layout.tsx` Inter + Plus Jakarta Sans; `globals.css` token + h1–h6; `Hero` + `HeroTechGraphic`; `Button` / `Input` / `EmptyState`; `CategoryBannerStrip` / `AnnouncementsHub` / kategori sayfası; `LandingMatchmakingFlow` / `LandingSections`; `TeamAdsMarketplace`; `SiteHeader` border; mat gölge değişkenleri
+- [x] Phase 15b: `uiClasses.ts` (`cardMatte`); dashboard (`DashboardShell`, `StatCard`, `DashboardNav`, `dashboard/page`, `ProfileSettingsClient`); admin (`AdminShell`, `AdminNav`, `admin/page`, `ModerationQueueClient`, `AdminAnnouncementsClient`) — vitrin ile aynı mat kart / slate tipografi
 
 ### In Progress
 - (boş)
@@ -74,6 +77,7 @@ Objective: Landing çift render düzeltmesi; minimal tema; Google-only auth + KV
 - `src/app/page.tsx`
 - `src/app/globals.css`
 - `src/components/home/Hero.tsx`
+- `src/components/home/HeroTechGraphic.tsx`
 - `src/components/site/SiteHeader.tsx`
 - `src/components/ui/Button.tsx`
 - `src/lib/motion.ts`
@@ -113,6 +117,7 @@ Objective: Landing çift render düzeltmesi; minimal tema; Google-only auth + KV
 - `src/app/kvkk/page.tsx` / `src/app/sozlesme/page.tsx`
 - `src/lib/authRole.ts`
 - `src/components/home/HeroBackdrop.tsx`
+- `src/lib/uiClasses.ts` (`cardMatte`, `cardMatteInteractive`)
 - `src/lib/projectMappers.ts` (Prisma ↔ UI `TeamAd`)
 - `src/lib/projectQueries.ts` (server-side okuma)
 - `src/actions/projectActions.ts` (`createProject` + `revalidatePath`)

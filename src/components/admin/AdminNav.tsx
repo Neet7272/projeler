@@ -14,7 +14,7 @@ export function AdminNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex flex-col gap-1 text-sm text-[var(--muted)]">
+    <nav className="flex flex-col gap-1 text-sm text-slate-600">
       {items.map((i) => {
         const active = pathname === i.href;
         return (
@@ -23,8 +23,8 @@ export function AdminNav() {
             href={i.href}
             aria-current={active ? "page" : undefined}
             className={cn(
-              "rounded-xl px-3 py-2 transition-colors hover:text-[var(--foreground)]",
-              active && "bg-[var(--surface)] text-[var(--foreground)]"
+              "rounded-xl px-3 py-2 transition-colors duration-200 hover:text-slate-900",
+              active && "bg-slate-100 font-medium text-slate-900"
             )}
           >
             {i.label}

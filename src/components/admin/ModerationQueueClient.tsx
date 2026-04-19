@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/Button";
 import { Toast, type ToastState } from "@/components/ui/Toast";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { updateProjectStatus } from "@/actions/adminActions";
+import { cn } from "@/lib/cn";
+import { cardMatte } from "@/lib/uiClasses";
 import type { TeamAd } from "@/lib/mockAds";
 
 type ModerationView = TeamAd["moderationState"];
@@ -76,11 +78,11 @@ export function ModerationQueueClient({ initial }: Props) {
 
   return (
     <div>
-      <p className="text-sm font-medium text-[var(--muted)]">Admin</p>
-      <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
+      <p className="text-sm font-medium text-slate-500">Admin</p>
+      <h1 className="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
         Moderasyon
       </h1>
-      <p className="mt-3 max-w-2xl text-base leading-7 text-[var(--muted)]">
+      <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
         Marketplace’e çıkmadan önce ilanları net kriterlerle onayla.
       </p>
 
@@ -91,10 +93,10 @@ export function ModerationQueueClient({ initial }: Props) {
             type="button"
             onClick={() => setView(v)}
             className={
-              "rounded-full border border-[var(--hairline)] px-4 py-2 text-sm transition-colors " +
+              "inline-flex min-h-11 items-center rounded-full px-4 text-sm font-medium transition-all duration-200 " +
               (view === v
-                ? "bg-[var(--surface)] text-[var(--foreground)]"
-                : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]")
+                ? "bg-slate-900 text-white shadow-[0_2px_8px_rgb(15,23,42,0.12)]"
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200/90")
             }
           >
             {v}
@@ -102,7 +104,7 @@ export function ModerationQueueClient({ initial }: Props) {
         ))}
       </div>
 
-      <div className="mt-10 rounded-2xl border border-[var(--hairline)] bg-[var(--surface)] p-2 sm:mt-12">
+      <div className={cn("mt-10 p-2 sm:mt-12", cardMatte)}>
         {rows.length === 0 ? (
           <EmptyState
             title="İlan yok"
@@ -111,22 +113,22 @@ export function ModerationQueueClient({ initial }: Props) {
             onAction={view !== "Pending" ? () => setView("Pending") : undefined}
           />
         ) : (
-          <ul className="divide-y divide-[var(--hairline)]">
+          <ul className="divide-y divide-slate-200/70">
             {rows.map((r) => (
               <li key={r.id} className="p-4 sm:p-5">
                 <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-[var(--foreground)]">
+                    <p className="text-sm font-semibold tracking-tight text-slate-900">
                       {r.title}
                     </p>
-                    <div className="mt-2 flex flex-wrap gap-2 text-xs text-[var(--muted)]">
-                      <span className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1">
+                    <div className="mt-2 flex flex-wrap gap-2 text-xs text-slate-600">
+                      <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
                         {r.status}
                       </span>
-                      <span className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1">
+                      <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-700">
                         {r.owner}
                       </span>
-                      <span className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1">
+                      <span className="rounded-full bg-slate-100 px-3 py-1 font-medium text-slate-600">
                         {r.id}
                       </span>
                     </div>
@@ -135,7 +137,7 @@ export function ModerationQueueClient({ initial }: Props) {
                       {r.tags.slice(0, 5).map((t) => (
                         <span
                           key={t}
-                          className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1 text-xs text-[var(--muted)]"
+                          className="rounded-full bg-slate-100 px-3 py-1 text-xs font-medium text-slate-700"
                         >
                           {t}
                         </span>
