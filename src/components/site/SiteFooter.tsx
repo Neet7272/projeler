@@ -47,7 +47,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
     <footer className="border-t border-slate-800/90 bg-gradient-to-b from-slate-950 via-[#0c1222] to-slate-950 text-slate-200">
-      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-6 py-14 md:grid-cols-3 md:gap-10 lg:gap-14">
+      <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-12 px-6 py-14 pb-[max(3.5rem,env(safe-area-inset-bottom,0px))] md:grid-cols-3 md:gap-10 lg:gap-14">
         <div className="md:pr-4">
           <p className="text-base font-semibold tracking-tight text-white">
             Ar-Ge İnovasyon ve Girişimcilik Kulübü

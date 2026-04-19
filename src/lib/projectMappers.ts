@@ -18,6 +18,58 @@ type PortfolioJson = {
   behance?: string;
 };
 
+function optStr(
+  o: Record<string, unknown>,
+  key: string,
+  maxLen: number,
+): string | undefined {
+  const v = o[key];
+  if (typeof v !== "string") return undefined;
+  const t = v.trim();
+  if (!t) return undefined;
+  return t.length > maxLen ? t.slice(0, maxLen) : t;
+}
+
+/** `Project.externalUrls` — bağlantılar + aranan roller + isteğe bağlı vitrin alanları */
+export type ParsedProjectUrls = ExternalLinks & {
+  lookingFor: string[];
+  tagline?: string;
+  deliverables?: string;
+  timeCommitment?: string;
+  collaborationNotes?: string;
+};
+
+function parseExternalUrls(raw: unknown): ParsedProjectUrls {
+  const empty: ParsedProjectUrls = { lookingFor: [] };
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return empty;
+  const o = raw as Record<string, unknown>;
+  const out: ParsedProjectUrls = { lookingFor: [] };
+  for (const k of ["figma", "notion", "competition", "repository"] as const) {
+    if (typeof o[k] === "string") {
+      const s = (o[k] as string).trim();
+      if (s) out[k] = s;
+    }
+  }
+  if (Array.isArray(o.lookingFor) && o.lookingFor.every((x) => typeof x === "string")) {
+    out.lookingFor = (o.lookingFor as string[])
+      .map((x) => x.trim())
+      .filter(Boolean)
+      .slice(0, 24);
+  }
+  const tagline = optStr(o, "tagline", 220);
+  const deliverables = optStr(o, "deliverables", 8000);
+  const timeCommitment = optStr(o, "timeCommitment", 160);
+  const collaborationNotes = optStr(o, "collaborationNotes", 4000);
+  return {
+    ...out,
+    lookingFor: out.lookingFor ?? [],
+    ...(tagline ? { tagline } : {}),
+    ...(deliverables ? { deliverables } : {}),
+    ...(timeCommitment ? { timeCommitment } : {}),
+    ...(collaborationNotes ? { collaborationNotes } : {}),
+  };
+}
+
 export function prismaStatusToUi(s: ProjectStatus): TeamAd["status"] {
   switch (s) {
     case "IDEA":
@@ -55,19 +107,6 @@ export function moderationToUi(m: ModerationStatus): TeamAd["moderationState"] {
     default:
       return "Pending";
   }
-}
-
-function parseExternalUrls(raw: unknown): ExternalLinks & { lookingFor?: string[] } {
-  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return {};
-  const o = raw as Record<string, unknown>;
-  const out: ExternalLinks & { lookingFor?: string[] } = {};
-  for (const k of ["figma", "notion", "competition", "repository"] as const) {
-    if (typeof o[k] === "string") out[k] = o[k];
-  }
-  if (Array.isArray(o.lookingFor) && o.lookingFor.every((x) => typeof x === "string")) {
-    out.lookingFor = o.lookingFor as string[];
-  }
-  return out;
 }
 
 function portfolioToMock(u: User): MockOwnerProfile {
@@ -115,5 +154,11 @@ export function mapProjectRowToTeamAd(row: ProjectWithOwner): TeamAd {
     lookingFor,
     owner: portfolioToMock(row.owner),
     links,
+    ...(ext.tagline ? { tagline: ext.tagline } : {}),
+    ...(ext.deliverables ? { deliverables: ext.deliverables } : {}),
+    ...(ext.timeCommitment ? { timeCommitment: ext.timeCommitment } : {}),
+    ...(ext.collaborationNotes
+      ? { collaborationNotes: ext.collaborationNotes }
+      : {}),
   };
 }

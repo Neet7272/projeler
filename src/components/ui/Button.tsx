@@ -33,6 +33,7 @@ export function Button(props: ButtonProps) {
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]",
     variant === "primary" &&
       cn(
+        "relative overflow-hidden btn-shine",
         "bg-[var(--primary)] text-[var(--primary-foreground)]",
         "shadow-[inset_0_1px_0_rgb(255,255,255,0.22),0_1px_0_rgb(15,23,42,0.06),0_4px_14px_rgb(8,145,178,0.28)]",
         "hover:brightness-[1.05] hover:shadow-[inset_0_1px_0_rgb(255,255,255,0.25),0_2px_0_rgb(15,23,42,0.05),0_8px_24px_rgb(8,145,178,0.35)]"

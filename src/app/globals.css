@@ -31,12 +31,18 @@
   box-sizing: border-box;
 }
 
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, "Segoe UI",
     Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
   font-feature-settings: "ss01" on, "cv01" on;
+  touch-action: manipulation;
 }
 
 h1,
@@ -69,4 +75,108 @@ body {
   font-size: 1.12em;
   font-weight: 600;
   color: #0f172a;
+}
+
+/* Phase 16: duyuru şeritleri sonsuz marquee (GPU: transform) */
+@keyframes announcement-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.announcement-marquee-track {
+  display: flex;
+  width: max-content;
+  animation-name: announcement-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: var(--marquee-duration, 42s);
+  will-change: transform;
+}
+
+.marquee-strip:hover .announcement-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .announcement-marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+/* Premium: birincil buton hafif parıltı süpürme */
+@media (prefers-reduced-motion: no-preference) {
+  .btn-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-130%);
+    background: linear-gradient(
+      100deg,
+      transparent 0%,
+      transparent 38%,
+      rgb(255 255 255 / 0.22) 50%,
+      transparent 62%,
+      transparent 100%
+    );
+    animation: btn-shine-sweep 5.2s ease-in-out infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes btn-shine-sweep {
+  0%,
+  40% {
+    transform: translateX(-130%);
+  }
+  55% {
+    transform: translateX(130%);
+  }
+  100% {
+    transform: translateX(130%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-shine::after {
+    display: none;
+  }
+}
+
+/* Hero: çok hafif nefes alan ışık (GPU opacity) */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-chrome::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background: radial-gradient(
+      900px 420px at 50% -10%,
+      rgb(6 182 212 / 0.11),
+      transparent 58%
+    );
+    animation: hero-ambient 16s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes hero-ambient {
+  from {
+    opacity: 0.45;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-chrome::after {
+    display: none;
+  }
 }

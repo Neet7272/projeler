@@ -2,37 +2,44 @@
 
 /**
  * Proje oluşturma — oturum: `requireAuthedMemberUser`.
- * Güvenlik: `src/lib/serverActionSecurity.ts`
+ * Güvenlik: `src/lib/serverActionSecurity.ts`, hız sınırı: `src/lib/rateLimit.ts`
  */
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
+import type { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { requireAuthedMemberUser } from "@/lib/authHelpers";
 import { uiStatusToPrisma } from "@/lib/projectMappers";
+import { allowRateLimit } from "@/lib/rateLimit";
+import {
+  createProjectSchema,
+  buildProjectExternalUrls,
+  type CreateProjectInput,
+} from "@/lib/projectCreateSchema";
 
-const createProjectSchema = z.object({
-  title: z.string().min(6).max(160),
-  description: z.string().min(40).max(12000),
-  requiredSkills: z
-    .array(z.string().min(1).max(48))
-    .min(1)
-    .max(24),
-  status: z.enum(["Idea", "Prototype", "Active Development"]),
-});
-
-export type CreateProjectInput = z.infer<typeof createProjectSchema>;
+export type { CreateProjectInput } from "@/lib/projectCreateSchema";
 
 export async function createProject(
-  input: CreateProjectInput
+  input: CreateProjectInput,
 ): Promise<{ ok: true } | { ok: false; error: string }> {
   const parsed = createProjectSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, error: parsed.error.issues[0]?.message ?? "Geçersiz veri." };
+    return {
+      ok: false,
+      error: parsed.error.issues[0]?.message ?? "Geçersiz veri.",
+    };
   }
 
   const user = await requireAuthedMemberUser();
   if (!user) {
     return { ok: false, error: "Proje oluşturmak için giriş yapmalısın." };
+  }
+
+  if (!allowRateLimit(`createProject:${user.id}`, 10, 60 * 60 * 1000)) {
+    return {
+      ok: false,
+      error:
+        "Çok sık proje oluşturma isteği gönderildi. Lütfen bir süre sonra tekrar dene.",
+    };
   }
 
   try {
@@ -43,7 +50,9 @@ export async function createProject(
         requiredSkills: parsed.data.requiredSkills,
         status: uiStatusToPrisma(parsed.data.status),
         moderationStatus: "PENDING",
-        externalUrls: { lookingFor: [] as string[] },
+        externalUrls: buildProjectExternalUrls(
+          parsed.data,
+        ) as Prisma.InputJsonValue,
         ownerId: user.id,
       },
     });

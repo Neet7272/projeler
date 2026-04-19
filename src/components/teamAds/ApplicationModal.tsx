@@ -80,7 +80,7 @@ export function ApplicationModal(props: {
   }
 
   const panelClass = cn(
-    "border border-[var(--hairline)] bg-[var(--background)]",
+    "border border-slate-200/75 bg-white shadow-[var(--shadow-matte-hover)] backdrop-blur-md",
     isMobile
       ? "absolute inset-x-0 bottom-0 rounded-t-3xl"
       : "w-[min(92vw,520px)] rounded-3xl"
@@ -127,18 +127,18 @@ export function ApplicationModal(props: {
             role="dialog"
             aria-modal="true"
           >
-            <div className="flex items-start justify-between gap-4 border-b border-[var(--hairline)] px-6 py-5">
+            <div className="flex items-start justify-between gap-4 border-b border-slate-200/70 px-6 py-5">
               <div>
-                <p className="text-xs font-medium text-[var(--muted)]">
+                <p className="text-xs font-medium text-slate-500">
                   Ekibe Katıl
                 </p>
-                <p className="mt-1 text-sm font-semibold text-[var(--foreground)]">
+                <p className="mt-1 text-sm font-semibold tracking-tight text-slate-900">
                   {props.adTitle}
                 </p>
               </div>
               <button
                 type="button"
-                className="rounded-full border border-[var(--hairline)] bg-[var(--surface)] px-3 py-1.5 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                className="rounded-full border border-slate-200/70 bg-white/90 px-3 py-1.5 text-sm text-slate-600 transition-colors hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 onClick={props.onClose}
               >
                 Kapat
@@ -146,7 +146,7 @@ export function ApplicationModal(props: {
             </div>
 
             <div className="px-6 py-6">
-              <label className="text-xs font-medium text-[var(--muted)]">
+              <label className="text-xs font-medium text-slate-500">
                 Kendinden bahset
               </label>
               <div className="mt-2">
@@ -154,16 +154,16 @@ export function ApplicationModal(props: {
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   rows={5}
-                  className="w-full resize-none rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3 text-sm text-[var(--foreground)]/90 placeholder:text-[var(--muted)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+                  className="w-full resize-none rounded-xl border border-slate-200/80 bg-white/90 px-4 py-3 text-sm text-slate-900 placeholder:text-slate-500 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                   placeholder="Bu projeye neden uygunsun? Hangi katkıları yapabilirsin?"
                 />
               </div>
               {errors.message ? (
-                <p className="mt-2 text-xs text-rose-300">{errors.message}</p>
+                <p className="mt-2 text-xs text-rose-600">{errors.message}</p>
               ) : null}
 
               <div className="mt-5">
-                <label className="text-xs font-medium text-[var(--muted)]">
+                <label className="text-xs font-medium text-slate-500">
                   Portfolyo linki (opsiyonel)
                 </label>
                 <div className="mt-2">
@@ -174,14 +174,14 @@ export function ApplicationModal(props: {
                   />
                 </div>
                 {errors.portfolioUrl ? (
-                  <p className="mt-2 text-xs text-rose-300">
+                  <p className="mt-2 text-xs text-rose-600">
                     {errors.portfolioUrl}
                   </p>
                 ) : null}
               </div>
 
               {apiError ? (
-                <p className="mt-4 text-xs text-rose-300">{apiError}</p>
+                <p className="mt-4 text-xs text-rose-600">{apiError}</p>
               ) : null}
 
               <div className="mt-6 flex gap-3">

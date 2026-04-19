@@ -1,15 +1,29 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
+import { absoluteUrl } from "@/lib/seo";
+
+const title = "Hakkımızda | Kent Ar-Ge Kulübü";
+const description =
+  "İstanbul Kent Üniversitesi Ar-Ge, İnovasyon ve Girişimcilik Kulübü — misyon, vizyon ve değerler.";
+const ogTitle = "Hakkımızda | Kent Ar-Ge";
 
 export const metadata: Metadata = {
-  title: "Hakkımızda | Kent Ar-Ge Kulübü",
-  description:
-    "İstanbul Kent Üniversitesi Ar-Ge, İnovasyon ve Girişimcilik Kulübü — misyon, vizyon ve değerler.",
+  title,
+  description,
+  alternates: { canonical: absoluteUrl("/hakkimizda") },
   openGraph: {
-    title: "Hakkımızda | Kent Ar-Ge",
+    title: ogTitle,
     description:
       "İstanbul Kent Üniversitesi Ar-Ge, İnovasyon ve Girişimcilik Kulübü resmi tanıtım sayfası.",
     type: "website",
+    url: absoluteUrl("/hakkimizda"),
+    locale: "tr_TR",
+  },
+  twitter: {
+    card: "summary",
+    title: ogTitle,
+    description:
+      "İstanbul Kent Üniversitesi Ar-Ge, İnovasyon ve Girişimcilik Kulübü resmi tanıtım sayfası.",
   },
 };
 

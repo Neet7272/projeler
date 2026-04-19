@@ -6,6 +6,12 @@ import { Button } from "@/components/ui/Button";
 import { getAnnouncementById } from "@/lib/announcementQueries";
 import { prismaCategoryToUiLabel } from "@/lib/announcementMappers";
 import { getSiteUrl } from "@/lib/siteUrl";
+import {
+  SITE_NAME,
+  breadcrumbListNode,
+  schemaDocument,
+} from "@/lib/seo";
+import { CATEGORY_ENUM_TO_SLUG } from "@/lib/announcementCategories";
 
 export async function generateMetadata(props: {
   params: Promise<{ id: string }>;
@@ -26,10 +32,13 @@ export async function generateMetadata(props: {
       description,
       type: "article",
       url,
+      locale: "tr_TR",
+      publishedTime: ann.createdAtIso,
+      modifiedTime: ann.createdAtIso,
       images: ann.coverImageUrl ? [{ url: ann.coverImageUrl }] : undefined,
     },
     twitter: {
-      card: ann.coverImageUrl ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title: ann.title,
       description,
     },
@@ -46,17 +55,42 @@ export default async function AnnouncementDetailPage(props: {
   const site = getSiteUrl();
   const url = `${site}/duyurular/${ann.id}`;
   const categoryLabel = prismaCategoryToUiLabel(ann.category);
+  const catSlug = CATEGORY_ENUM_TO_SLUG[ann.category];
+  const catPath = `/duyurular/kategori/${catSlug}`;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
+  const articleLd: Record<string, unknown> = {
     "@type": "Article",
     headline: ann.title,
-    description: ann.content.slice(0, 300),
-    datePublished: ann.createdAt,
-    author: { "@type": "Organization", name: "Kent Ar-Ge Kulübü" },
-    image: ann.coverImageUrl,
+    description: ann.content.replace(/\s+/g, " ").slice(0, 320),
+    datePublished: ann.createdAtIso,
+    dateModified: ann.createdAtIso,
+    inLanguage: "tr-TR",
+    articleSection: categoryLabel,
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: site,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: site,
+      logo: { "@type": "ImageObject", url: `${site}/favicon.ico` },
+    },
+    image: ann.coverImageUrl ? [ann.coverImageUrl] : undefined,
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
+    isAccessibleForFree: true,
   };
+
+  const jsonLd = schemaDocument(
+    articleLd,
+    breadcrumbListNode([
+      { name: "Ana sayfa", path: "/" },
+      { name: "Duyurular", path: "/duyurular" },
+      { name: categoryLabel, path: catPath },
+      { name: ann.title, path: `/duyurular/${ann.id}` },
+    ]),
+  );
 
   return (
     <>

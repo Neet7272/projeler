@@ -8,6 +8,11 @@ import {
   CATEGORY_STRIP_META,
   parseCategorySlug,
 } from "@/lib/announcementCategories";
+import {
+  absoluteUrl,
+  breadcrumbListNode,
+  schemaDocument,
+} from "@/lib/seo";
 
 export async function generateMetadata(props: {
   params: Promise<{ slug: string }>;
@@ -16,10 +21,24 @@ export async function generateMetadata(props: {
   const cat = parseCategorySlug(slug);
   if (!cat) return { title: "Kategori bulunamadı" };
   const meta = CATEGORY_STRIP_META[cat];
+  const url = absoluteUrl(`/duyurular/kategori/${slug}`);
+  const title = `${meta.title} | Duyurular`;
   return {
-    title: `${meta.title} | Duyurular`,
+    title,
     description: meta.subtitle,
-    openGraph: { title: meta.title, description: meta.subtitle },
+    alternates: { canonical: url },
+    openGraph: {
+      title: meta.title,
+      description: meta.subtitle,
+      type: "website",
+      url,
+      locale: "tr_TR",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: meta.title,
+      description: meta.subtitle,
+    },
   };
 }
 
@@ -36,8 +55,21 @@ export default async function AnnouncementCategoryPage(props: {
   const items = await getAnnouncementsByCategory(cat, 80);
   const meta = CATEGORY_STRIP_META[cat];
 
+  const jsonLd = schemaDocument(
+    breadcrumbListNode([
+      { name: "Ana sayfa", path: "/" },
+      { name: "Duyurular", path: "/duyurular" },
+      { name: meta.title, path: `/duyurular/kategori/${slug}` },
+    ]),
+  );
+
   return (
-    <div className="mx-auto w-full max-w-6xl px-6 py-24 sm:py-28">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="mx-auto w-full max-w-6xl px-6 py-24 sm:py-28">
       <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-slate-500">
@@ -92,5 +124,6 @@ export default async function AnnouncementCategoryPage(props: {
         </p>
       ) : null}
     </div>
+    </>
   );
 }

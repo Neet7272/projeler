@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { springReveal, springTap } from "@/lib/motion";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Toast, type ToastState } from "@/components/ui/Toast";
@@ -163,9 +164,23 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
           {filtered.map((ad) => (
             <motion.article
               key={ad.id}
-              className="rounded-2xl border border-slate-200/65 bg-white/90 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]"
+              className="relative rounded-2xl border border-slate-200/65 bg-white/90 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-shadow duration-300 before:pointer-events-none before:absolute before:inset-x-4 before:top-0 before:h-px before:rounded-full before:bg-gradient-to-r before:from-transparent before:via-cyan-400/25 before:to-transparent hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]"
               variants={itemVariants}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              transition={
+                reduceMotion
+                  ? { duration: 0 }
+                  : { type: "spring", stiffness: 380, damping: 28, mass: 0.9 }
+              }
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : { y: -5, scale: 1.008, transition: springReveal }
+              }
+              whileTap={
+                reduceMotion
+                  ? undefined
+                  : { scale: 0.994, transition: springTap }
+              }
             >
               <div className="flex items-start justify-between gap-4">
                 <div className="min-w-0">
@@ -175,6 +190,11 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                   >
                     {ad.title}
                   </Link>
+                  {ad.tagline ? (
+                    <p className="mt-1.5 line-clamp-2 text-sm font-medium leading-snug text-cyan-900/85">
+                      {ad.tagline}
+                    </p>
+                  ) : null}
                   <p className="mt-1 text-xs text-slate-500">
                     {ad.owner.name} • Member
                   </p>
@@ -184,7 +204,7 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                 </span>
               </div>
 
-              <p className="mt-3 text-sm leading-6 text-slate-600">
+              <p className="mt-3 line-clamp-4 text-sm leading-6 text-slate-600">
                 {ad.description}
               </p>
 

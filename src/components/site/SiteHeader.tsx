@@ -32,7 +32,7 @@ export function SiteHeader() {
   }, [menuOpen]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-[color:color-mix(in_oklab,var(--background),transparent_18%)] backdrop-blur-md supports-[backdrop-filter]:bg-[color:color-mix(in_oklab,var(--background),transparent_18%)]">
+    <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-[color:color-mix(in_oklab,var(--background),transparent_18%)] pt-[env(safe-area-inset-top,0px)] backdrop-blur-md supports-[backdrop-filter]:bg-[color:color-mix(in_oklab,var(--background),transparent_18%)]">
       <div className="mx-auto flex min-h-14 w-full max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
         <Link
           href="/"
@@ -119,11 +119,11 @@ export function SiteHeader() {
       {menuOpen ? (
         <div
           id="mobile-nav"
-          className="fixed inset-0 top-14 z-30 flex flex-col bg-[color:color-mix(in_oklab,var(--background),#000_12%)] px-4 pb-8 pt-4 backdrop-blur-md lg:hidden"
+          className="fixed inset-0 top-14 z-30 flex flex-col bg-[color:color-mix(in_oklab,var(--background),#000_12%)] px-4 pb-[max(2rem,env(safe-area-inset-bottom,0px))] pt-4 backdrop-blur-md lg:hidden"
           role="dialog"
           aria-modal="true"
         >
-          <div className="flex flex-1 flex-col gap-1 overflow-y-auto rounded-2xl border border-[var(--hairline)] bg-[var(--background)] p-2 shadow-lg">
+          <div className="flex min-h-0 max-h-[calc(100dvh-5.5rem)] flex-1 flex-col gap-1 overflow-y-auto overscroll-y-contain rounded-2xl border border-[var(--hairline)] bg-[var(--background)] p-2 shadow-lg touch-pan-y">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={href}

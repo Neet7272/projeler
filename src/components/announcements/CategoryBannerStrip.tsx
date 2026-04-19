@@ -8,7 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useRef } from "react";
+import { useMemo, useRef, type CSSProperties } from "react";
 import { Button } from "@/components/ui/Button";
 import type { Announcement } from "@/lib/mockAnnouncements";
 import { CATEGORY_STRIP_META } from "@/lib/announcementCategories";
@@ -20,7 +20,38 @@ type Props = {
 };
 
 const cardClass =
-  "snap-start shrink-0 w-[min(88vw,340px)] overflow-hidden rounded-2xl border border-slate-200/65 bg-white/90 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:shadow-[var(--shadow-matte-hover)]";
+  "shrink-0 w-[min(88vw,340px)] overflow-hidden rounded-2xl border border-slate-200/65 bg-white/90 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:shadow-[var(--shadow-matte-hover)]";
+
+function AnnouncementStripCard({ a }: { a: Announcement }) {
+  return (
+    <article className={cardClass}>
+      <Link href={`/duyurular/${a.id}`} className="block">
+        {a.coverImageUrl ? (
+          <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
+            <Image
+              src={a.coverImageUrl}
+              alt=""
+              fill
+              className="object-cover transition-transform duration-500 ease-out hover:scale-[1.02]"
+              sizes="340px"
+            />
+          </div>
+        ) : (
+          <div className="aspect-video w-full bg-gradient-to-br from-slate-100 to-slate-200/80" />
+        )}
+        <div className="p-5">
+          <p className="text-xs text-slate-500">{a.createdAt}</p>
+          <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug tracking-tight text-slate-900">
+            {a.title}
+          </h3>
+          <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
+            {a.content}
+          </p>
+        </div>
+      </Link>
+    </article>
+  );
+}
 
 export function CategoryBannerStrip({ category, items }: Props) {
   const reduce = useReducedMotion();
@@ -31,6 +62,16 @@ export function CategoryBannerStrip({ category, items }: Props) {
     offset: ["start end", "end start"],
   });
   const bgY = useTransform(scrollYProgress, [0, 1], reduce ? [0, 0] : [0, -24]);
+
+  const loopItems = useMemo(
+    () => (items.length ? [...items, ...items] : []),
+    [items],
+  );
+
+  const marqueeDurationSec = useMemo(
+    () => Math.min(88, Math.max(22, items.length * 12)),
+    [items.length],
+  );
 
   return (
     <motion.section
@@ -71,51 +112,32 @@ export function CategoryBannerStrip({ category, items }: Props) {
           </Button>
         </div>
 
-        <div className="mt-10 flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-12 sm:gap-5 [&::-webkit-scrollbar]:hidden snap-x snap-mandatory">
+        <div className="mt-10 overflow-x-hidden sm:mt-12">
           {items.length === 0 ? (
-            <p className="snap-start text-sm text-slate-600">
+            <p className="text-sm text-slate-600">
               Bu kategoride henüz duyuru yok.
             </p>
+          ) : reduce ? (
+            <div className="flex flex-wrap gap-4 sm:gap-5">
+              {items.map((a) => (
+                <AnnouncementStripCard key={a.id} a={a} />
+              ))}
+            </div>
           ) : (
-            items.map((a, i) => (
-              <motion.article
-                key={a.id}
-                initial={reduce ? undefined : { opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{
-                  delay: reduce ? 0 : i * 0.06,
-                  duration: 0.4,
-                  ease: [0.16, 1, 0.3, 1],
-                }}
-                className={cardClass}
+            <div className="marquee-strip cursor-default">
+              <div
+                className="announcement-marquee-track gap-4 sm:gap-5"
+                style={
+                  {
+                    "--marquee-duration": `${marqueeDurationSec}s`,
+                  } as CSSProperties
+                }
               >
-                <Link href={`/duyurular/${a.id}`} className="block">
-                  {a.coverImageUrl ? (
-                    <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
-                      <Image
-                        src={a.coverImageUrl}
-                        alt=""
-                        fill
-                        className="object-cover transition-transform duration-500 ease-out hover:scale-[1.02]"
-                        sizes="340px"
-                      />
-                    </div>
-                  ) : (
-                    <div className="aspect-video w-full bg-gradient-to-br from-slate-100 to-slate-200/80" />
-                  )}
-                  <div className="p-5">
-                    <p className="text-xs text-slate-500">{a.createdAt}</p>
-                    <h3 className="mt-2 line-clamp-2 text-base font-semibold leading-snug tracking-tight text-slate-900">
-                      {a.title}
-                    </h3>
-                    <p className="mt-2 line-clamp-2 text-sm leading-6 text-slate-600">
-                      {a.content}
-                    </p>
-                  </div>
-                </Link>
-              </motion.article>
-            ))
+                {loopItems.map((a, i) => (
+                  <AnnouncementStripCard key={`${a.id}-${i}`} a={a} />
+                ))}
+              </div>
+            </div>
           )}
         </div>
       </div>

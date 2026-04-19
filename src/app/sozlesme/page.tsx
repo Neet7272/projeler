@@ -1,9 +1,22 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { absoluteUrl } from "@/lib/seo";
+
+const title = "Kullanıcı Sözleşmesi";
+const description = "Platform kullanıcı sözleşmesi (taslak metin).";
 
 export const metadata: Metadata = {
-  title: "Kullanıcı Sözleşmesi",
-  description: "Platform kullanıcı sözleşmesi (taslak metin).",
+  title,
+  description,
+  alternates: { canonical: absoluteUrl("/sozlesme") },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: absoluteUrl("/sozlesme"),
+    locale: "tr_TR",
+  },
+  twitter: { card: "summary", title, description },
 };
 
 export default function SozlesmePage() {

@@ -11,7 +11,10 @@ export type Announcement = {
   category: AnnouncementCategory;
   externalApplyUrl?: string;
   externalApplyLabel?: string;
+  /** Görüntü (YYYY-MM-DD) */
   createdAt: string;
+  /** Schema.org / SEO için tam ISO */
+  createdAtIso: string;
 };
 
 /** Eski seed referansı — gerçek veri veritabanından gelir. */

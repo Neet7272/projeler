@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { absoluteUrl } from "@/lib/seo";
+
+const title = "KVKK ve Gizlilik Politikası";
+const description =
+  "Kişisel verilerin korunması ve gizlilik politikası (taslak metin).";
 
 export const metadata: Metadata = {
-  title: "KVKK ve Gizlilik Politikası",
-  description:
-    "Kişisel verilerin korunması ve gizlilik politikası (taslak metin).",
+  title,
+  description,
+  alternates: { canonical: absoluteUrl("/kvkk") },
+  openGraph: {
+    title,
+    description,
+    type: "website",
+    url: absoluteUrl("/kvkk"),
+    locale: "tr_TR",
+  },
+  twitter: { card: "summary", title, description },
 };
 
 export default function KvkkPage() {

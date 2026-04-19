@@ -85,5 +85,6 @@ export function mapAnnouncementRowToUi(row: AnnouncementRow): Announcement {
     externalApplyUrl: extUrl && extUrl.length > 0 ? extUrl : undefined,
     externalApplyLabel: extLabel && extLabel.length > 0 ? extLabel : undefined,
     createdAt: row.createdAt.toISOString().slice(0, 10),
+    createdAtIso: row.createdAt.toISOString(),
   };
 }

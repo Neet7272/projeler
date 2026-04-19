@@ -98,6 +98,12 @@ async function main() {
         externalUrls: {
           lookingFor: ad.lookingFor,
           ...(ad.links ?? {}),
+          ...(ad.tagline ? { tagline: ad.tagline } : {}),
+          ...(ad.deliverables ? { deliverables: ad.deliverables } : {}),
+          ...(ad.timeCommitment ? { timeCommitment: ad.timeCommitment } : {}),
+          ...(ad.collaborationNotes
+            ? { collaborationNotes: ad.collaborationNotes }
+            : {}),
         },
         moderationStatus: mod,
         ownerId: user.id,
@@ -110,6 +116,12 @@ async function main() {
         externalUrls: {
           lookingFor: ad.lookingFor,
           ...(ad.links ?? {}),
+          ...(ad.tagline ? { tagline: ad.tagline } : {}),
+          ...(ad.deliverables ? { deliverables: ad.deliverables } : {}),
+          ...(ad.timeCommitment ? { timeCommitment: ad.timeCommitment } : {}),
+          ...(ad.collaborationNotes
+            ? { collaborationNotes: ad.collaborationNotes }
+            : {}),
         },
         moderationStatus: mod,
         ownerId: user.id,

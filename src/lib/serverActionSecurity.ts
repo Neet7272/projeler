@@ -7,8 +7,7 @@
  *
  * Oran sınırlama (rate limiting):
  * - Üretimde öneri: Vercel KV, Upstash Redis, Cloudflare Workers + sliding window.
- * - Hassas uçlar: `registerWithCredentials`, `signIn` (NextAuth), başvuru ve proje oluşturma.
- * - Şu an uygulama katmanında sabit pencere yok; edge/API route veya middleware ile eklenebilir.
+ * - Uygulama: `createProject` (10/saat/kullanıcı), `submitApplication` (40/saat/kullanıcı) — `src/lib/rateLimit.ts` (process başına bellek; serverless’te yumuşak sınır).
  */
 
 export {};

@@ -22,7 +22,7 @@ export function Hero() {
   return (
     <section
       ref={boundsRef}
-      className="relative overflow-hidden border-y border-slate-200/60 bg-[color:color-mix(in_oklab,white,transparent_6%)] px-6 py-24 sm:py-32"
+      className="hero-chrome relative overflow-hidden border-y border-slate-200/60 bg-[color:color-mix(in_oklab,white,transparent_6%)] px-6 py-24 sm:py-32"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(1000px_520px_at_20%_-20%,rgba(6,182,212,0.12),transparent_55%),radial-gradient(900px_480px_at_95%_10%,rgba(14,165,233,0.1),transparent_50%),radial-gradient(700px_400px_at_50%_100%,rgba(99,102,241,0.06),transparent_55%)]" />
       <div className="pointer-events-none absolute inset-0 z-[1]">

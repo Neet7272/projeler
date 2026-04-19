@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { springReveal, springTap } from "@/lib/motion";
 import { UserPlus, Search, Megaphone, Users } from "lucide-react";
 
 const steps = [
@@ -27,7 +28,7 @@ const steps = [
 ] as const;
 
 const stepCardClass =
-  "relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/65 bg-white/85 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]";
+  "relative flex flex-col overflow-hidden rounded-2xl border border-slate-200/65 bg-white/85 p-6 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-[border-color,box-shadow] duration-300 hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]";
 
 /**
  * Tek responsive grid — aynı adımların iki kez (masaüstü + mobil) map edilmesi yok.
@@ -58,10 +59,28 @@ export function LandingMatchmakingFlow() {
             return (
               <motion.article
                 key={s.title}
-                initial={reduce ? undefined : { opacity: 0, y: 12 }}
+                initial={reduce ? undefined : { opacity: 0, y: 14 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.4, delay: reduce ? 0 : i * 0.06 }}
+                transition={
+                  reduce
+                    ? { duration: 0 }
+                    : {
+                        type: "spring",
+                        stiffness: 360,
+                        damping: 26,
+                        mass: 0.9,
+                        delay: i * 0.055,
+                      }
+                }
+                whileHover={
+                  reduce
+                    ? undefined
+                    : { y: -5, scale: 1.01, transition: springReveal }
+                }
+                whileTap={
+                  reduce ? undefined : { scale: 0.992, transition: springTap }
+                }
                 className={stepCardClass}
               >
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-400/35 to-transparent" />

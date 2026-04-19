@@ -20,6 +20,18 @@ export type ExternalLinks = {
   repository?: string;
 };
 
+/** `Project.externalUrls` içinde saklanan isteğe bağlı vitrin detayları */
+export type TeamAdExtended = {
+  /** Kart / paylaşım için tek satır */
+  tagline?: string;
+  /** Teslimatlar, kapsam, kilometre taşları */
+  deliverables?: string;
+  /** Örn. “5–8 saat/hafta” */
+  timeCommitment?: string;
+  /** Çalışma şekli, araçlar, buluşma tercihi */
+  collaborationNotes?: string;
+};
+
 export type TeamAd = {
   id: string;
   title: string;
@@ -30,7 +42,7 @@ export type TeamAd = {
   lookingFor: string[];
   owner: MockOwnerProfile;
   links?: ExternalLinks;
-};
+} & TeamAdExtended;
 
 export const teamAds: TeamAd[] = [
   {
@@ -56,6 +68,13 @@ export const teamAds: TeamAd[] = [
       notion: "https://www.notion.so/",
       competition: "https://teknofest.org/",
     },
+    tagline:
+      "Sürü İHA yer kontrolü, saha testi ve jüri demosuna kadar uçuşa hazır prototip.",
+    deliverables:
+      "Görev planlama modülü, sürü haberleşme katmanı, yer istasyonu UI taslağı, saha test raporu ve yarışma teknik dosyası özeti.",
+    timeCommitment: "Haftada 6–10 saat; sprint toplantıları Çarşamba akşamı.",
+    collaborationNotes:
+      "Discord + aylık hibrit buluşma; kod ve dokümantasyon İngilizce/Türkçe karışık kabul edilir.",
   },
   {
     id: "ad_002",

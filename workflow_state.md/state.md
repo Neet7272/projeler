@@ -7,7 +7,7 @@
 - **Next.js App Router**: Fully Working
 - **Database Connection**: Fully Working (Prisma + PostgreSQL)
 - **Authentication**: Fully Working (NextAuth.js v5 + yalnızca Google OAuth + Prisma Adapter; JWT oturum; isteğe bağlı `ADMIN_EMAILS` ile Edge’te admin rolü)
-- **Environment Variables**: Fully Working (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`; `AUTH_GOOGLE_*` veya `GOOGLE_CLIENT_*`; isteğe bağlı Cloudinary, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `ADMIN_EMAILS`)
+- **Environment Variables**: Fully Working (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`; `AUTH_GOOGLE_*` veya `GOOGLE_CLIENT_*`; isteğe bağlı Cloudinary, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `ADMIN_EMAILS`; SEO için `NEXT_PUBLIC_SITE_URL`, isteğe bağlı `NEXT_PUBLIC_OG_IMAGE`, `NEXT_PUBLIC_TWITTER_SITE`)
 
 ## Core Features Status Tracker
 - **Routing & Layout baseline**: Fully Working
@@ -24,10 +24,10 @@
 - **Announcements CRUD**: Fully Working (yalnızca admin)
 
 ## Phase 5 (Polish) Status
-- **Global page transitions**: Fully Working
+- **Global page transitions**: Fully Working (Phase 16: cyan tam ekran wipe + `AnimatePresence` sayfa sarmalayıcısı; önceki hafif fade/yerine)
 - **Scroll-reveal motion**: Fully Working
-- **SEO metadata (static + dynamic)**: Fully Working
-- **Mobile overflow & tap targets**: Fully Working
+- **SEO metadata (static + dynamic)**: Fully Working (Phase 17: `metadataBase`, `robots.txt`, `sitemap.xml`, `manifest`, kök JSON-LD, canonical birleştirme, korumalı `noindex`)
+- **Mobile overflow & tap targets**: Fully Working (Phase 17: safe-area, `touch-action: manipulation`, `-webkit-text-size-adjust`, drawer scroll)
 - **Error handling & empty states**: Fully Working
 
 ## Mock Data Persistence
@@ -96,6 +96,26 @@
 - **Duyurular**: Fully Working (şerit kartları `aspect-video` üst kapak; kategori grid dikey kartlar)
 - **Vitrin**: Fully Working (`TeamAdsMarketplace` kartlar + slate etiket pill’leri)
 - **Dashboard & Admin UI (Phase 15b)**: Fully Working (`cardMatte` / `StatCard` hover; yan menü + moderasyon + duyuru CRUD yüzeyleri vitrin ile hizalı)
+- **İlan / detay / başvuru (Phase 15c)**: Fully Working (`PostTeamAdForm`, `AdDetailClient`, `ApplicationModal`; `/takim-kur` aynı formu kullanır)
+
+## Phase 16 (Fluid motion) Status
+- **Duyuru hub şerit marquee**: Fully Working (`CategoryBannerStrip`: CSS sonsuz kaydırma, çift liste, hover’da duraklatma; `prefers-reduced-motion` / `useReducedMotion` için tek sıra `flex-wrap`)
+- **Global route wipe**: Fully Working (`src/app/template.tsx`: ilk navigasyon sonrası `bg-cyan-600` panel; `overflow-x-hidden` kök sarmalayıcı; indirgenmiş hareket modunda sade içerik)
+
+## Phase 17 (SEO & mobil) Status
+- **Sitemap / robots / manifest**: Fully Working (`sitemap.ts` DB yoksa statik+kategori fallback; `robots.ts` sitemap bağlantısı)
+- **Ortak SEO modülü**: Fully Working (`src/lib/seo.ts` + sayfa `canonical` / `openGraph.url` / `locale: tr_TR` genişletmesi)
+- **Gizlilik**: Fully Working (dashboard, admin, `auth`, `takim-kur` `robots: noindex`)
+
+## Phase 18 (Premium SEO + motion) Status
+- **Dinamik paylaşım görselleri**: Fully Working (kök `/opengraph-image` + `/twitter-image`; `duyurular/[id]`, `takim-ilanlari/[id]` Prisma ile başlık/metin; `duyurular/kategori/[slug]` Edge; kapaklı duyuruda metadata’daki fotoğraf öncelikli; `NEXT_PUBLIC_OG_IMAGE` kök override)
+- **Yapılandırılmış veri**: Fully Working (kök `@graph` EducationalOrganization + WebSite SearchAction; duyuru/kategori/takım detay breadcrumb + zengin Article/CreativeWork; `createdAtIso`)
+- **Animasyon & mikro etkileşim**: Fully Working (spring hover/tap vitrin ve landing kartlarında; `btn-shine`; `hero-chrome`; reduced-motion uyumu)
+
+## Phase 19 (Vitrin derinlik + güvenlik) Status
+- **Proje vitrin meta modeli**: Fully Working (`externalUrls`: `lookingFor` + isteğe bağlı metinler + harici linkler; `mapProjectRowToTeamAd`; `projectCreateSchema` + `PostTeamAdForm`)
+- **HTTP güvenlik başlıkları**: Fully Working (`next.config.ts` `headers`; HSTS yalnızca `NODE_ENV=production`)
+- **Oran sınırlama (yumuşak)**: Fully Working (`rateLimit.ts`: proje oluşturma ve başvuru; kalıcı limit için Redis önerisi `serverActionSecurity` notunda)
 
 ## Known Bugs & Technical Debt
 - Google dışı yerel seed kullanıcıları: giriş için Google OAuth veya DB’de aynı e-posta ile hesap; isteğe bağlı `ADMIN_EMAILS` ile admin menü erişimi.
