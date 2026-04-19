@@ -45,6 +45,18 @@ export async function generateMetadata(props: {
 const listCardClass =
   "group block overflow-hidden rounded-2xl border border-slate-200/65 bg-white/90 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/28 hover:shadow-[var(--shadow-matte-hover)]";
 
+function isSafeHttpUrl(src: string | null | undefined): src is string {
+  if (!src) return false;
+  const s = src.trim();
+  if (!s || /\s/.test(s)) return false;
+  try {
+    const u = new URL(s);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 export default async function AnnouncementCategoryPage(props: {
   params: Promise<{ slug: string }>;
 }) {
@@ -91,7 +103,7 @@ export default async function AnnouncementCategoryPage(props: {
         {items.map((a) => (
           <li key={a.id}>
             <Link href={`/duyurular/${a.id}`} className={listCardClass}>
-              {a.coverImageUrl ? (
+              {a.coverImageUrl && isSafeHttpUrl(a.coverImageUrl) ? (
                 <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
                   <Image
                     src={a.coverImageUrl}

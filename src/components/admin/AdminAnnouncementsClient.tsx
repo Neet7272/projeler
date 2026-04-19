@@ -51,6 +51,18 @@ const schema = z.object({
 type Values = z.infer<typeof schema>;
 type FieldErrors = Partial<Record<keyof Values, string>>;
 
+function isSafeHttpUrl(src: string | null | undefined): src is string {
+  if (!src) return false;
+  const s = src.trim();
+  if (!s || /\s/.test(s)) return false;
+  try {
+    const u = new URL(s);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 function priorityDot(p: AnnouncementPriority) {
   if (p === "High") return "bg-rose-400";
   if (p === "Low") return "bg-white/30";
@@ -83,6 +95,7 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
     useState<AnnouncementCategoryUiLabel>("Kulüp etkinlikleri");
   const [externalApplyUrl, setExternalApplyUrl] = useState("");
   const [externalApplyLabel, setExternalApplyLabel] = useState("");
+  const [brokenCovers, setBrokenCovers] = useState<Record<string, true>>({});
 
   useEffect(() => {
     if (!toast.open) return;
@@ -248,14 +261,21 @@ export function AdminAnnouncementsClient({ initialItems }: Props) {
                   {a.coverImageUrl ? (
                     <div className="mb-4 overflow-hidden rounded-2xl border border-slate-200/65 bg-slate-50">
                       <div className="relative h-36 w-full">
-                        <Image
-                          src={a.coverImageUrl}
-                          alt=""
-                          fill
-                          sizes="(min-width: 640px) 50vw, 100vw"
-                          className="object-cover"
-                          priority={false}
-                        />
+                        {isSafeHttpUrl(a.coverImageUrl) && !brokenCovers[a.id] ? (
+                          <Image
+                            src={a.coverImageUrl}
+                            alt=""
+                            fill
+                            sizes="(min-width: 640px) 50vw, 100vw"
+                            className="object-cover"
+                            priority={false}
+                            onError={() =>
+                              setBrokenCovers((prev) => ({ ...prev, [a.id]: true }))
+                            }
+                          />
+                        ) : (
+                          <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200/80" />
+                        )}
                       </div>
                     </div>
                   ) : null}

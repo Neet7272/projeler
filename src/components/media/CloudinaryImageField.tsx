@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CldImage, CldUploadWidget } from "next-cloudinary";
 import Image from "next/image";
 import {
@@ -36,6 +36,15 @@ export function CloudinaryImageField({
   const preset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
   const configured = isCloudinaryUploadConfigured();
   const [localPublicId, setLocalPublicId] = useState<string | null>(null);
+  const [brokenPreview, setBrokenPreview] = useState(false);
+
+  const safePreviewUrl = useMemo(() => {
+    const s = value?.trim();
+    if (!s) return null;
+    if (/\s/.test(s)) return null;
+    if (!/^https?:\/\//i.test(s)) return null;
+    return s;
+  }, [value]);
 
   const displayPublicId = useMemo(() => {
     if (localPublicId) return localPublicId;
@@ -43,6 +52,11 @@ export function CloudinaryImageField({
       return null;
     return publicIdFromSecureUrl(value);
   }, [localPublicId, value, cloudName]);
+
+  // URL değişince hata durumunu sıfırla
+  useEffect(() => {
+    setBrokenPreview(false);
+  }, [value]);
 
   if (!configured) {
     return (
@@ -64,7 +78,7 @@ export function CloudinaryImageField({
         {helperText ? (
           <p className="text-xs text-[var(--muted)]">{helperText}</p>
         ) : null}
-        {value && !value.includes("res.cloudinary.com") ? (
+        {safePreviewUrl && !safePreviewUrl.includes("res.cloudinary.com") && !brokenPreview ? (
           <div
             className={cn(
               "relative mt-2 overflow-hidden rounded-xl border border-[var(--hairline)]",
@@ -72,7 +86,14 @@ export function CloudinaryImageField({
               "max-h-52 w-full max-w-md"
             )}
           >
-            <Image src={value} alt="" fill className="object-cover" sizes="400px" />
+            <Image
+              src={safePreviewUrl}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="400px"
+              onError={() => setBrokenPreview(true)}
+            />
           </div>
         ) : null}
       </div>
@@ -145,7 +166,18 @@ export function CloudinaryImageField({
             "max-h-56 w-full max-w-md"
           )}
         >
-          <Image src={value} alt="" fill className="object-cover" sizes="400px" />
+          {safePreviewUrl && !brokenPreview ? (
+            <Image
+              src={safePreviewUrl}
+              alt=""
+              fill
+              className="object-cover"
+              sizes="400px"
+              onError={() => setBrokenPreview(true)}
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200/80" />
+          )}
         </div>
       ) : null}
     </div>

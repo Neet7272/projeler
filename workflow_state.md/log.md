@@ -4,9 +4,9 @@
 - When the **Done** list grows, summarize major milestones into `workflow_state.md/archive_log.md` and prune Done here.
 
 ## Current Phase & Objective
-**Phase 22: Global sayfa süpürme (template tek kaynak)**
+**Phase 27: SiteHeader mobil reset + Awwwards polish**
 
-Objective: SVG `d` morph iptal edildi (CPU lag). `PageWipe` artık **Ultra-Fast GPU Crescent**: tek `motion.svg` (150vh), statik matematiksel path (üstte convex kubbe + altta concave scoop), renk `text-cyan-500` (`#06b6d4`), yalnızca `y` transform animasyonu (0.5s, `times: [0,0.4,0.5,1]`, `ease: [0.76,0,0.24,1]`) + yalnızca `app/template.tsx`; `pointer-events-none`, `z-[99999]`; `log` güncel.
+Objective: Üst bar **standart flex** (`h-16`, `justify-between`, `max-w-7xl`, `bg-white/80 backdrop-blur-md`); marka **truncate**; mobil **`Menu`/`X` (`lucide-react`)** + `p-2` hit alanı; mobil nav **yalnız açıkken** `createPortal` + `AnimatePresence` ile `bg-slate-50` tam ekran (kapalıyken içerik yok); **Hero** `tracking-tighter` + başlık **stagger**; **PageWipe** cyan (`#06b6d4`) alttan yukarı ~0.5s, `[0.76,0,0.24,1]`, `pointer-events-none`, yatay kayma yok.
 
 ## Active Task Board
 ### To Do
@@ -44,6 +44,11 @@ Objective: SVG `d` morph iptal edildi (CPU lag). `PageWipe` artık **Ultra-Fast 
 - [x] Phase 20: `ExternalLinks` + `projectCreateSchema` / `buildProjectExternalUrls` / `parseExternalUrls` / `mapProjectRowToTeamAd` — `portfolioUrl`, `projectUrl`; `PostTeamAdForm` isteğe bağlı iki URL; `AdDetailClient` “Proje Hakkında” kartı, sağ “Bağlantılar” kartı (lucide), etiket kartından dış link kaldırma, grid `gap-8`
 - [x] Phase 21: `AdminAnnouncementsClient` modal `max-h-[85vh]` / `85dvh` + gövde `overflow-y-auto`; `TeamAdsMarketplace` kart `onClick` + klavye, iç `stopPropagation`; `LandingSections` “Yönetim Paneli”; `SiteHeader` fixed + scroll yönü ile gizle/göster + yer tutucu; header gizlenince mobil menü kapanır
 - [x] Phase 22: `src/components/transitions/PageWipe.tsx` (portal + slate tam ekran, alttan → duraklama → yukarı çıkış); `app/template.tsx` yalnızca `PageWipe` + çocuklar; eski cyan wipe + içerik `AnimatePresence`/`usePathname` wipeKey kaldırıldı
+- [x] Phase 25: mobil tam ekran menü overlay + `next/image` URL/`onError` korumaları + `remotePatterns` + `app/icon.svg` / metadata
+- [x] Phase 26: `SiteHeader` üst bar reset + mobil menü `document.body` portalı + `<768px` scroll-hide kapatma + grid/marka kırpma
+- [x] Phase 27: `SiteHeader` tam flex reset + portal mobil overlay izolasyonu; `Hero` stagger + `PageWipe` cyan organik wipe; TS `ease` tuple (`as const`)
+- [x] SiteHeader mobil hamburger: `/duyurular` vb. ana menü rotalarında cyan gradient + ring; kapalıyken hafif “breathing” ışık; `Menu`↔`X` `AnimatePresence` + spring `whileTap`; `prefers-reduced-motion` uyumu
+- [x] SiteHeader mobil tam ekran overlay: arka plan radial glow; nav **stagger** + blur/slide giriş; **aktif rota** cyan kart + sol accent; kapat / giriş-çıkış **spring tap** + gecikmeli alt blok
 
 ### In Progress
 - (boş)

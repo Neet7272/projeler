@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   },
   description: DEFAULT_DESCRIPTION,
   applicationName: SITE_NAME,
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+  },
   keywords: [...SITE_KEYWORDS],
   authors: [{ name: SITE_NAME, url: getMetadataBase().href }],
   creator: SITE_NAME,

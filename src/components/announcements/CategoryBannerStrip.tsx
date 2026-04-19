@@ -8,7 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { useMemo, useRef, type CSSProperties } from "react";
+import { useMemo, useRef, useState, type CSSProperties } from "react";
 import { Button } from "@/components/ui/Button";
 import type { Announcement } from "@/lib/mockAnnouncements";
 import { CATEGORY_STRIP_META } from "@/lib/announcementCategories";
@@ -19,14 +19,27 @@ type Props = {
   items: Announcement[];
 };
 
+function isSafeHttpUrl(src: string | null | undefined): src is string {
+  if (!src) return false;
+  const s = src.trim();
+  if (!s || /\s/.test(s)) return false;
+  try {
+    const u = new URL(s);
+    return u.protocol === "http:" || u.protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
 const cardClass =
   "shrink-0 w-[min(88vw,340px)] overflow-hidden rounded-2xl border border-slate-200/65 bg-white/90 shadow-[var(--shadow-matte)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-sky-500/30 hover:shadow-[var(--shadow-matte-hover)]";
 
 function AnnouncementStripCard({ a }: { a: Announcement }) {
+  const [broken, setBroken] = useState(false);
   return (
     <article className={cardClass}>
       <Link href={`/duyurular/${a.id}`} className="block">
-        {a.coverImageUrl ? (
+        {a.coverImageUrl && isSafeHttpUrl(a.coverImageUrl) && !broken ? (
           <div className="relative aspect-video w-full overflow-hidden bg-slate-100">
             <Image
               src={a.coverImageUrl}
@@ -34,6 +47,7 @@ function AnnouncementStripCard({ a }: { a: Announcement }) {
               fill
               className="object-cover transition-transform duration-500 ease-out hover:scale-[1.02]"
               sizes="340px"
+              onError={() => setBroken(true)}
             />
           </div>
         ) : (

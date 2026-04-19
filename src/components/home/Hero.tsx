@@ -8,6 +8,22 @@ import { HeroBackdrop } from "@/components/home/HeroBackdrop";
 import { NetworkParticles } from "@/components/home/NetworkParticles";
 import { HeroTechGraphic } from "@/components/home/HeroTechGraphic";
 
+const titleStagger = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.09, delayChildren: 0.06 },
+  },
+};
+
+const titleChild = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.16, 1, 0.3, 1] as const },
+  },
+};
+
 export function Hero() {
   const boundsRef = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
@@ -42,9 +58,28 @@ export function Hero() {
           <p className="text-sm font-medium tracking-wide text-slate-500">
             Ar-Ge • İnovasyon • Girişimcilik
           </p>
-          <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tight text-slate-900 sm:text-5xl sm:leading-[1.08]">
-            Bağlantı kur. Takım oluştur. Projeni birlikte hayata geçir.
-          </h1>
+          {reduceMotion ? (
+            <h1 className="mt-4 text-balance text-4xl font-semibold tracking-tighter text-slate-900 sm:text-5xl sm:leading-[1.08]">
+              Bağlantı kur. Takım oluştur. Projeni birlikte hayata geçir.
+            </h1>
+          ) : (
+            <motion.h1
+              className="mt-4 text-balance text-4xl font-semibold tracking-tighter text-slate-900 sm:text-5xl sm:leading-[1.08]"
+              variants={titleStagger}
+              initial="hidden"
+              animate="show"
+            >
+              <motion.span className="inline-block" variants={titleChild}>
+                Bağlantı kur.
+              </motion.span>{" "}
+              <motion.span className="inline-block" variants={titleChild}>
+                Takım oluştur.
+              </motion.span>{" "}
+              <motion.span className="inline-block" variants={titleChild}>
+                Projeni birlikte hayata geçir.
+              </motion.span>
+            </motion.h1>
+          )}
           <p className="mt-5 text-pretty text-base leading-7 text-slate-600 sm:text-lg">
             Kulüp etkinlikleri ve yarışmalar tek yerde. Proje vitrini üzerinden
             ekiplere katıl veya kendi projeni oluştur.
@@ -67,7 +102,7 @@ export function Hero() {
           transition={{
             duration: reduceMotion ? 0 : 0.6,
             delay: reduceMotion ? 0 : 0.12,
-            ease: [0.16, 1, 0.3, 1],
+            ease: [0.16, 1, 0.3, 1] as const,
           }}
         >
           <HeroTechGraphic className="w-full drop-shadow-[0_20px_48px_rgb(15,23,42,0.08)]" />

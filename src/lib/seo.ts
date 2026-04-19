@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getSiteUrl } from "@/lib/siteUrl";
 
-export const SITE_NAME = "Ar-Ge İnovasyon ve Girişimcilik Kulübü";
+export const SITE_NAME = "Kent Ar-Ge İnovasyon Kulübü";
 export const SITE_SHORT_NAME = "Kent Ar-Ge";
 
 export const DEFAULT_DESCRIPTION =
