@@ -115,7 +115,7 @@ export function PostTeamAdForm() {
         open: true,
         title: "Gönderildi",
         description:
-          "Projen moderasyon kuyruğunda. Onaylandıktan sonra vitrinde görünecek.",
+          "Projeleriniz 24 saat içinde incelenip onaylanacaktır. Onaylandıktan sonra vitrinde görünecek.",
       });
       window.setTimeout(() => {
         router.push("/proje-vitrini");
@@ -159,7 +159,7 @@ export function PostTeamAdForm() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={5}
-              className="w-full resize-none rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3 text-sm text-[var(--foreground)]/90 placeholder:text-[var(--muted)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+              className="w-full resize-none rounded-xl border border-[var(--hairline)] bg-black/0 px-4 py-3 text-sm text-[var(--foreground)]/90 placeholder:text-[var(--muted)] transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
               placeholder="Problemi, hedefi ve şu anki seviyeyi yaz. Kimleri arıyorsun?"
             />
           </div>
@@ -200,7 +200,7 @@ export function PostTeamAdForm() {
                   <button
                     type="button"
                     onClick={() => removeTag(t)}
-                    className="rounded-full border border-[var(--hairline)] bg-black/0 px-2 py-0.5 text-[10px] text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                    className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[var(--hairline)] bg-black/0 text-sm text-[var(--muted)] transition-colors hover:text-[var(--foreground)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                     aria-label={`${t} etiketini kaldır`}
                   >
                     ×
@@ -252,7 +252,7 @@ export function PostTeamAdForm() {
                   type="button"
                   key={t}
                   onClick={() => addTag(t)}
-                  className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1 text-left text-xs text-[var(--foreground)]/80 transition-colors hover:bg-[var(--surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/60"
+                  className="inline-flex min-h-11 items-center rounded-full border border-[var(--hairline)] bg-black/0 px-4 text-left text-xs text-[var(--foreground)]/80 transition-colors hover:bg-[var(--surface)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
                 >
                   {t}
                 </button>
@@ -269,7 +269,7 @@ export function PostTeamAdForm() {
             <select
               value={status}
               onChange={(e) => setStatus(e.target.value as FormValues["status"])}
-              className="h-11 w-full rounded-xl border border-[var(--hairline)] bg-black/0 px-4 text-sm text-[var(--foreground)]/90 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400/50"
+              className="h-11 min-h-11 w-full rounded-xl border border-[var(--hairline)] bg-black/0 px-4 text-sm text-[var(--foreground)]/90 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--ring)]"
             >
               <option value="Idea">Idea</option>
               <option value="Prototype">Prototype</option>

@@ -1,4 +1,5 @@
 import type { NextAuthConfig } from "next-auth";
+import { resolveRole } from "@/lib/authRole";
 
 /**
  * Edge (middleware) ile paylaşılan yapılandırma — Node-only modül içe aktarma yok
@@ -17,21 +18,32 @@ export const authConfig = {
           id?: string;
           sub?: string;
           role?: "ADMIN" | "MEMBER";
+          email?: string | null;
         };
         const id = u.id ?? u.sub;
         if (id) {
           token.id = id;
           token.sub = id;
         }
+        if (typeof u.email === "string") {
+          token.email = u.email;
+        }
         token.role = u.role ?? "MEMBER";
       }
+      token.role = resolveRole({
+        role: token.role,
+        email: (token.email as string | null | undefined) ?? null,
+      });
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         const id = (token.id ?? token.sub) as string;
         session.user.id = id;
-        session.user.role = token.role as "ADMIN" | "MEMBER";
+        session.user.role = resolveRole({
+          role: token.role,
+          email: session.user.email ?? (token.email as string | null | undefined),
+        });
         session.user.profileComplete = Boolean(token.profileComplete);
         if (typeof token.picture === "string" && token.picture.length > 0) {
           session.user.image = token.picture;

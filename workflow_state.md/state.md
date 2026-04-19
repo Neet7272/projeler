@@ -6,8 +6,8 @@
 ## Infrastructure & Environment Status
 - **Next.js App Router**: Fully Working
 - **Database Connection**: Fully Working (Prisma + PostgreSQL)
-- **Authentication**: Fully Working (NextAuth.js v5 + Credentials + Google OAuth + Prisma Adapter; JWT oturum)
-- **Environment Variables**: Fully Working (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`; isteğe bağlı `AUTH_GOOGLE_*`, Cloudinary, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`)
+- **Authentication**: Fully Working (NextAuth.js v5 + yalnızca Google OAuth + Prisma Adapter; JWT oturum; isteğe bağlı `ADMIN_EMAILS` ile Edge’te admin rolü)
+- **Environment Variables**: Fully Working (`DATABASE_URL`, `DIRECT_URL`, `AUTH_SECRET`; `AUTH_GOOGLE_*` veya `GOOGLE_CLIENT_*`; isteğe bağlı Cloudinary, `NEXT_PUBLIC_GOOGLE_CLIENT_ID`, `ADMIN_EMAILS`)
 
 ## Core Features Status Tracker
 - **Routing & Layout baseline**: Fully Working
@@ -51,8 +51,8 @@
 - **Admin + duyuru**: Fully Working
 
 ## Phase 10 (Auth, profil, başvuru) Status
-- **NextAuth + Credentials**: Fully Working
-- **Kayıt**: Fully Working (`registerWithCredentials` server action; `authorize` yalnızca mevcut kullanıcı)
+- **NextAuth (Google)**: Fully Working (Phase 13’te Credentials kaldırıldı)
+- **Kayıt**: Kapalı — yalnızca Google ile hesap oluşumu (`registerWithCredentials` reddeder)
 - **Korumalı rotalar + middleware (JWT)**: Fully Working
 - **Profil (`userActions` + DB)**: Fully Working
 - **Başvuru (`applicationActions` + `Application` tablosu)**: Fully Working
@@ -61,7 +61,7 @@
 ## Phase 11 (Refinement) Status
 - **Duyuru kategorileri + hub şeritleri + kategori rotaları**: Fully Working
 - **Duyuru detay (kapak, tipografi, dış başvuru, Article JSON-LD)**: Fully Working
-- **Auth UI (Giriş/Kayıt toggle)**: Fully Working
+- **Auth UI (Google + yasal onay)**: Fully Working (Phase 13: e-posta kaydı kaldırıldı)
 - **`/hakkimizda` (kurumsal) + landing “Nasıl çalışır?”**: Fully Working (Phase 12’de ayrıldı)
 - **Seed (gerçekçi TR içerik; admin çıktısı)**: Fully Working
 - **Server actions**: Oturum + DB kullanıcı doğrulaması (`requireAuthedMemberUser` / `requireAdmin`); ek Zod sınırları; başvuruda proje sahibi engeli
@@ -73,8 +73,18 @@
 - **Mobil üst menü (hamburger, ≥44px hedefler)**: Fully Working
 - **Ar-Ge hero partikülleri + landing zaman çizelgesi**: Fully Working
 
+## Phase 13 (Enterprise polish & compliance) Status
+- **Landing “Nasıl çalışır?” çift render**: Fully Working (`LandingMatchmakingFlow` tek grid; kullanılmayan `HowItWorks` kaldırıldı)
+- **Tema (minimal antrasit / cyan)**: Fully Working (`globals.css` + layout arka plan vurgusu)
+- **Hero etkileşim**: Fully Working (`HeroBackdrop` + mevcut partiküller)
+- **Auth sıkılığı**: Fully Working (Credentials kaldırıldı; `registerWithCredentials` kapalı; girişte KVKK/sözleşme onayı)
+- **Edge admin rolü**: Fully Working (`src/lib/authRole.ts` + `auth.config` / `auth` JWT normalizasyonu; `ADMIN_EMAILS`)
+- **Hukuk sayfaları + footer**: Fully Working (`/kvkk`, `/sozlesme`, `SiteFooter`)
+- **Moderasyon şeffaflığı (24 saat metni)**: Fully Working (`PostTeamAdForm` toast + `TeamAdsMarketplace` boş durum)
+- **Mobil dokunma (≥44px)**: Fully Working (filtre chip’leri ve etiket kontrolleri turu)
+
 ## Known Bugs & Technical Debt
-- Credentials prototipi: üretimde OAuth/sağlayıcı ve e-posta doğrulama düşünülmeli.
+- Google dışı yerel seed kullanıcıları: giriş için Google OAuth veya DB’de aynı e-posta ile hesap; isteğe bağlı `ADMIN_EMAILS` ile admin menü erişimi.
 - JWT’de rol güncellemesi oturum yenilenene kadar eski kalabilir; admin layout her istekte DB’den doğrular.
 
 ## Key Active Dependencies (locked-in)

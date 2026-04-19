@@ -26,6 +26,9 @@ const steps = [
   },
 ] as const;
 
+/**
+ * Tek responsive grid — aynı adımların iki kez (masaüstü + mobil) map edilmesi yok.
+ */
 export function LandingMatchmakingFlow() {
   const reduce = useReducedMotion();
 
@@ -46,12 +49,16 @@ export function LandingMatchmakingFlow() {
           </p>
         </div>
 
-        <div className="mt-12 hidden gap-4 lg:grid lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:mt-16 lg:grid-cols-4 lg:gap-5">
           {steps.map((s, i) => {
             const Icon = s.icon;
             return (
-              <div
+              <motion.article
                 key={s.title}
+                initial={reduce ? undefined : { opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{ duration: 0.4, delay: reduce ? 0 : i * 0.06 }}
                 className="relative flex flex-col rounded-2xl border border-cyan-500/15 bg-[var(--background)] p-6 shadow-[0_0_0_1px_rgba(34,211,238,0.06)]"
               >
                 <div className="absolute -top-px left-6 right-6 h-px bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
@@ -63,31 +70,6 @@ export function LandingMatchmakingFlow() {
                 </p>
                 <h3 className="mt-1 text-lg font-semibold text-[var(--foreground)]">{s.title}</h3>
                 <p className="mt-2 flex-1 text-sm leading-7 text-[var(--muted)]">{s.body}</p>
-              </div>
-            );
-          })}
-        </div>
-
-        <div className="mt-10 flex gap-4 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] lg:hidden [&::-webkit-scrollbar]:hidden">
-          {steps.map((s, i) => {
-            const Icon = s.icon;
-            return (
-              <motion.article
-                key={s.title}
-                initial={reduce ? undefined : { opacity: 0, y: 10 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-20px" }}
-                transition={{ duration: 0.35, delay: reduce ? 0 : i * 0.06 }}
-                className="min-w-[min(100%,280px)] shrink-0 snap-center rounded-2xl border border-cyan-500/15 bg-[var(--background)] p-5 shadow-sm"
-              >
-                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-xl border border-cyan-500/25 bg-cyan-500/10 text-cyan-600">
-                  <Icon className="h-6 w-6" strokeWidth={1.75} aria-hidden />
-                </div>
-                <p className="mt-4 text-xs font-semibold text-cyan-700/90">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
-                <h3 className="mt-1 text-base font-semibold text-[var(--foreground)]">{s.title}</h3>
-                <p className="mt-2 text-sm leading-7 text-[var(--muted)]">{s.body}</p>
               </motion.article>
             );
           })}

@@ -30,6 +30,11 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
   const selectedTag =
     tag ?? (initialTag && allTags.includes(initialTag) ? initialTag : null);
 
+  const approvedAds = useMemo(
+    () => teamAds.filter((a) => a.moderationState === "Approved"),
+    [teamAds]
+  );
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return teamAds.filter((a) => {
@@ -120,7 +125,7 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                   type="button"
                   onClick={() => setTag(null)}
                   className={
-                    "rounded-full border border-[var(--hairline)] px-3 py-1 text-xs transition-colors " +
+                    "inline-flex min-h-11 items-center rounded-full border border-[var(--hairline)] px-4 text-xs transition-colors " +
                     (selectedTag === null
                       ? "bg-[var(--surface)] text-[var(--foreground)]"
                       : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]")
@@ -134,7 +139,7 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                     type="button"
                     onClick={() => setTag(t)}
                     className={
-                      "rounded-full border border-[var(--hairline)] px-3 py-1 text-left text-xs transition-colors " +
+                      "inline-flex min-h-11 max-w-full items-center rounded-full border border-[var(--hairline)] px-4 text-left text-xs transition-colors " +
                       (selectedTag === t
                         ? "bg-[var(--surface)] text-[var(--foreground)]"
                         : "text-[var(--muted)] hover:bg-[var(--surface)] hover:text-[var(--foreground)]")
@@ -189,7 +194,7 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
                     key={t}
                     type="button"
                     onClick={() => setTag(t)}
-                    className="rounded-full border border-[var(--hairline)] bg-black/0 px-3 py-1 text-xs text-[var(--muted)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--foreground)]"
+                    className="inline-flex min-h-11 max-w-full items-center rounded-full border border-[var(--hairline)] bg-black/0 px-4 text-xs text-[var(--muted)] transition-colors hover:bg-[var(--surface)] hover:text-[var(--foreground)]"
                   >
                     {t}
                   </button>
@@ -215,15 +220,22 @@ export function TeamAdsMarketplace(props: { projects: TeamAd[] }) {
 
           {filtered.length === 0 ? (
             <div className="sm:col-span-2">
-              <EmptyState
-                title="Sonuç bulunamadı"
-                description="Bu kriterlerle eşleşen proje ilanı yok. Filtreleri temizleyip tekrar deneyebilirsin."
-                actionLabel="Filtreleri temizle"
-                onAction={() => {
-                  setQuery("");
-                  setTag(null);
-                }}
-              />
+              {approvedAds.length === 0 ? (
+                <EmptyState
+                  title="Henüz onaylı ilan yok"
+                  description="Projeleriniz 24 saat içinde incelenip onaylanacaktır. Onaylanan ilanlar burada listelenir."
+                />
+              ) : (
+                <EmptyState
+                  title="Sonuç bulunamadı"
+                  description="Bu kriterlerle eşleşen proje ilanı yok. Filtreleri temizleyip tekrar deneyebilirsin."
+                  actionLabel="Filtreleri temizle"
+                  onAction={() => {
+                    setQuery("");
+                    setTag(null);
+                  }}
+                />
+              )}
             </div>
           ) : null}
         </motion.div>

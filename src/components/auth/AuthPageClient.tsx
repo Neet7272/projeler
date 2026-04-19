@@ -1,20 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { signIn } from "next-auth/react";
-import {
-  AnimatePresence,
-  motion,
-  useReducedMotion,
-} from "framer-motion";
 import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Toast, type ToastState } from "@/components/ui/Toast";
-import { registerWithCredentials } from "@/actions/authActions";
-import { cn } from "@/lib/cn";
-
-type Tab = "login" | "register";
 
 function GoogleGlyph({ className }: { className?: string }) {
   return (
@@ -45,124 +35,17 @@ const googleOAuthUi =
   process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID.length > 0;
 
 export function AuthPageClient() {
-  const router = useRouter();
   const sp = useSearchParams();
   const next = sp.get("next") ?? "/dashboard";
-  const reduceMotion = useReducedMotion();
-
-  const [tab, setTab] = useState<Tab>("login");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [registerError, setRegisterError] = useState<string | null>(null);
-  const [loginError, setLoginError] = useState<string | null>(null);
-  const [toast, setToast] = useState<ToastState>({ open: false });
-
-  useEffect(() => {
-    if (!toast.open) return;
-    const t = setTimeout(() => setToast({ open: false }), 2400);
-    return () => clearTimeout(t);
-  }, [toast.open]);
-
-  async function onLogin() {
-    if (loading) return;
-    setLoading(true);
-    setLoginError(null);
-
-    const res = await signIn("credentials", {
-      email: email.trim().toLowerCase(),
-      password,
-      redirect: false,
-    });
-
-    setLoading(false);
-
-    if (!res || res.ok !== true) {
-      const code = res?.code;
-      const err = res?.error;
-      const message =
-        err === "CredentialsSignin" || code === "credentials"
-          ? "E-posta veya şifre hatalı."
-          : err
-            ? `Giriş yapılamadı (${err}).`
-            : "Giriş yapılamadı. Bağlantını kontrol edip tekrar dene.";
-      setLoginError(message);
-      setToast({
-        open: true,
-        title: "Giriş başarısız",
-        description: message,
-      });
-      return;
-    }
-
-    setToast({
-      open: true,
-      title: "Giriş başarılı",
-      description: "Yönlendiriliyorsun.",
-    });
-    router.push(next);
-    router.refresh();
-  }
+  const [legalAccepted, setLegalAccepted] = useState(false);
 
   async function onGoogle() {
-    if (loading) return;
+    if (loading || !legalAccepted) return;
     setLoading(true);
-    setLoginError(null);
-    setRegisterError(null);
     await signIn("google", { callbackUrl: next });
     setLoading(false);
   }
-
-  async function onRegister() {
-    if (loading) return;
-    setRegisterError(null);
-    setLoginError(null);
-    setLoading(true);
-
-    const reg = await registerWithCredentials({
-      email: email.trim().toLowerCase(),
-      password,
-      name: name.trim(),
-    });
-
-    if (!reg.ok) {
-      setLoading(false);
-      setRegisterError(reg.error);
-      return;
-    }
-
-    const res = await signIn("credentials", {
-      email: email.trim().toLowerCase(),
-      password,
-      redirect: false,
-    });
-
-    setLoading(false);
-
-    if (!res || res.ok !== true) {
-      const message =
-        res?.error === "CredentialsSignin"
-          ? "Hesap oluşturuldu ancak oturum açılamadı (kimlik doğrulama). Giriş sekmesinden dene."
-          : "Hesap oluşturuldu ancak oturum açılamadı. Giriş sekmesinden dene.";
-      setRegisterError(message);
-      setTab("login");
-      return;
-    }
-
-    setToast({
-      open: true,
-      title: "Hoş geldin",
-      description: "Hesabın hazır. Yönlendiriliyorsun.",
-    });
-    router.push(next);
-    router.refresh();
-  }
-
-  const canLogin =
-    email.trim().includes("@") && password.length >= 1;
-  const canRegister =
-    name.trim().length >= 2 && email.trim().length > 3 && password.length >= 8;
 
   return (
     <div className="mx-auto w-full max-w-6xl px-6 py-16 sm:py-24">
@@ -172,189 +55,73 @@ export function AuthPageClient() {
             Auth
           </p>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
-            Giriş Yap / Kaydol
+            Giriş Yap
           </h1>
           <p className="mt-3 text-sm leading-6 text-[var(--muted)]">
-            Kulüp platformuna eriş: profilini tamamla, projelere başvur, vitrine çık.
+            Kulüp platformuna erişmek için Google hesabınla oturum aç.
           </p>
-
-          <div className="relative mt-8 flex gap-0">
-            {(["login", "register"] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => {
-                  setTab(t);
-                  setRegisterError(null);
-                  setLoginError(null);
-                }}
-                className={cn(
-                  "relative flex-1 pb-3 text-sm font-medium transition-colors",
-                  tab === t
-                    ? "text-[var(--foreground)]"
-                    : "text-[var(--muted)] hover:text-[var(--foreground)]/80"
-                )}
-              >
-                {t === "login" ? "Giriş Yap" : "Kayıt Ol"}
-                {tab === t ? (
-                  <motion.span
-                    layoutId="auth-tab-indicator"
-                    className="absolute inset-x-2 -bottom-px h-0.5 rounded-full bg-[var(--foreground)]"
-                    transition={
-                      reduceMotion
-                        ? { duration: 0 }
-                        : { type: "spring", stiffness: 380, damping: 30 }
-                    }
-                  />
-                ) : null}
-              </button>
-            ))}
-          </div>
         </div>
 
         <div className="px-8 py-8 sm:px-10">
           {googleOAuthUi ? (
-            <div className="mb-8 space-y-3">
+            <div className="space-y-6">
               <button
                 type="button"
                 onClick={() => void onGoogle()}
-                disabled={loading}
-                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border border-slate-200/80 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-[0_1px_0_rgba(15,23,42,0.06),0_12px_40px_-20px_rgba(15,23,42,0.35)] transition hover:border-slate-300 hover:shadow-[0_12px_48px_-18px_rgba(15,23,42,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 disabled:opacity-60"
+                disabled={loading || !legalAccepted}
+                className="flex min-h-12 w-full items-center justify-center gap-3 rounded-2xl border border-slate-200/80 bg-white px-4 py-3 text-sm font-semibold text-slate-800 shadow-[0_1px_0_rgba(15,23,42,0.06),0_12px_40px_-20px_rgba(15,23,42,0.35)] transition hover:border-slate-300 hover:shadow-[0_12px_48px_-18px_rgba(15,23,42,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50 disabled:pointer-events-none disabled:opacity-50"
               >
                 <GoogleGlyph className="h-5 w-5 shrink-0" />
-                Google ile devam et
+                {loading ? "Yönlendiriliyor…" : "Google ile devam et"}
               </button>
-              <div className="flex items-center gap-3 text-xs text-[var(--muted)]">
-                <span className="h-px flex-1 bg-[var(--hairline)]" />
-                veya e-posta ile
-                <span className="h-px flex-1 bg-[var(--hairline)]" />
-              </div>
+
+              <label className="flex cursor-pointer gap-3 rounded-2xl border border-[var(--hairline)] bg-[var(--background)]/40 p-4 text-left">
+                <input
+                  type="checkbox"
+                  checked={legalAccepted}
+                  onChange={(e) => setLegalAccepted(e.target.checked)}
+                  className="mt-1 h-5 w-5 shrink-0 rounded border-[var(--hairline)] text-[var(--primary)] focus:ring-[var(--ring)]"
+                />
+                <span className="text-sm leading-6 text-[var(--muted)]">
+                  <Link
+                    href="/sozlesme"
+                    className="font-medium text-[var(--foreground)] underline-offset-2 hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    Kullanıcı Sözleşmesi
+                  </Link>
+                  {" ve "}
+                  <Link
+                    href="/kvkk"
+                    className="font-medium text-[var(--foreground)] underline-offset-2 hover:underline"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    KVKK / Gizlilik Politikası
+                  </Link>
+                  ’nı okudum; Google ile giriş yaparak bu metinleri kabul ettiğimi
+                  beyan ederim.
+                </span>
+              </label>
             </div>
           ) : (
-            <p className="mb-6 rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-950/90">
+            <p className="rounded-xl border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-950/90">
               Google girişi için sunucuda{" "}
               <code className="rounded bg-black/10 px-1">AUTH_GOOGLE_ID</code> /{" "}
               <code className="rounded bg-black/10 px-1">AUTH_GOOGLE_SECRET</code> ve isteğe bağlı
-              istemci butonu için{" "}
+              istemci uyarısı için{" "}
               <code className="rounded bg-black/10 px-1">NEXT_PUBLIC_GOOGLE_CLIENT_ID</code>{" "}
-              tanımlayın (aynı OAuth Client ID).
+              tanımlayın.
             </p>
           )}
 
-          <AnimatePresence mode="wait" initial={false}>
-            <motion.div
-              key={tab}
-              initial={
-                reduceMotion
-                  ? { opacity: 1, x: 0 }
-                  : { opacity: 0, x: tab === "login" ? -12 : 12 }
-              }
-              animate={{ opacity: 1, x: 0 }}
-              exit={
-                reduceMotion
-                  ? { opacity: 1, x: 0 }
-                  : { opacity: 0, x: tab === "login" ? 12 : -12 }
-              }
-              transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
-              className="space-y-4"
-            >
-              {tab === "register" ? (
-                <div>
-                  <label className="text-xs font-medium text-[var(--muted)]">
-                    Ad Soyad
-                  </label>
-                  <div className="mt-2">
-                    <Input
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      placeholder="Adın ve soyadın"
-                      autoComplete="name"
-                    />
-                  </div>
-                </div>
-              ) : null}
-
-              <div>
-                <label className="text-xs font-medium text-[var(--muted)]">
-                  E-posta
-                </label>
-                <div className="mt-2">
-                  <Input
-                    type="email"
-                    autoComplete="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="name@university.edu"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="text-xs font-medium text-[var(--muted)]">
-                  Şifre
-                </label>
-                <div className="mt-2">
-                  <Input
-                    type="password"
-                    autoComplete={
-                      tab === "login" ? "current-password" : "new-password"
-                    }
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="En az 8 karakter"
-                  />
-                </div>
-              </div>
-
-              {tab === "register" && registerError ? (
-                <motion.p
-                  initial={reduceMotion ? undefined : { opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-xs text-rose-200"
-                >
-                  {registerError}
-                </motion.p>
-              ) : null}
-
-              {tab === "login" && loginError ? (
-                <motion.p
-                  initial={reduceMotion ? undefined : { opacity: 0, y: 4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="rounded-xl border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-xs text-rose-200"
-                  role="alert"
-                >
-                  {loginError}
-                </motion.p>
-              ) : null}
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            {tab === "login" ? (
-              <Button
-                variant="primary"
-                onClick={onLogin}
-                disabled={loading || !canLogin}
-              >
-                {loading ? "Giriş yapılıyor..." : "Giriş Yap"}
-              </Button>
-            ) : (
-              <Button
-                variant="primary"
-                onClick={onRegister}
-                disabled={loading || !canRegister}
-              >
-                {loading ? "Kaydediliyor..." : "Kayıt Ol"}
-              </Button>
-            )}
-            <Button href="/" variant="secondary">
+          <div className="mt-8">
+            <Button href="/" variant="secondary" className="w-full sm:w-auto">
               Ana sayfa
             </Button>
           </div>
         </div>
       </div>
 
-      <Toast state={toast} onClose={() => setToast({ open: false })} />
     </div>
   );
 }

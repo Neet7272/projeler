@@ -1,10 +1,9 @@
 import NextAuth from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
-import Credentials from "next-auth/providers/credentials";
-import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { computeProfileComplete } from "@/lib/profile";
+import { resolveRole } from "@/lib/authRole";
 import { authConfig } from "@/auth.config";
 
 const googleId =
@@ -24,40 +23,10 @@ const providers = [
         }),
       ]
     : []),
-  Credentials({
-    name: "credentials",
-    credentials: {
-      email: { label: "E-posta", type: "email" },
-      password: { label: "Şifre", type: "password" },
-    },
-    async authorize(credentials) {
-      const email = credentials?.email?.toString().trim().toLowerCase();
-      const password = credentials?.password?.toString() ?? "";
-      if (!email || !password) return null;
-
-      const user = await prisma.user.findUnique({ where: { email } });
-
-      if (!user?.passwordHash) {
-        return null;
-      }
-
-      const ok = await bcrypt.compare(password, user.passwordHash);
-      if (!ok) return null;
-
-      return {
-        id: user.id,
-        sub: user.id,
-        email: user.email,
-        name: user.name,
-        image: user.image,
-        role: user.role,
-      };
-    },
-  }),
 ];
 
 /**
- * Node: PrismaAdapter (Google OAuth Account tablosu) + Credentials.
+ * Node: PrismaAdapter (Google OAuth Account tablosu).
  * Middleware yalnızca `auth.config.ts` kullanır (Edge uyumlu).
  */
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -79,9 +48,13 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             if (dbUser.image) {
               token.picture = dbUser.image;
             }
+            if (dbUser.email) {
+              token.email = dbUser.email;
+            }
           } else {
-            const u = user as { role?: "ADMIN" | "MEMBER" };
+            const u = user as { role?: "ADMIN" | "MEMBER"; email?: string | null };
             token.role = u.role ?? "MEMBER";
+            if (typeof u.email === "string") token.email = u.email;
           }
         }
       }
@@ -96,8 +69,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           if (dbUser.image) {
             token.picture = dbUser.image;
           }
+          if (dbUser.email) {
+            token.email = dbUser.email;
+          }
         }
       }
+      token.role = resolveRole({
+        role: token.role,
+        email: (token.email as string | null | undefined) ?? null,
+      });
       return token;
     },
   },

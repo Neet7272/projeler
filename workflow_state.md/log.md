@@ -4,9 +4,9 @@
 - When the **Done** list grows, summarize major milestones into `workflow_state.md/archive_log.md` and prune Done here.
 
 ## Current Phase & Objective
-**Phase 12: Advanced Cloud Integration & UX Overhaul**
+**Phase 13: Enterprise Polish, Security Strictness, and Legal Compliance**
 
-Objective: Google OAuth + PrismaAdapter; Cloudinary yükleme (duyuru kapak + profil); Ar-Ge hero partikülleri; `/hakkimizda` yalnızca kurumsal içerik / “Nasıl çalışır?” ayrı landing bileşeni; mobil menü ve dokunma hedefleri; `.env.example`.
+Objective: Landing çift render düzeltmesi; minimal tema; Google-only auth + KVKK/sözleşme onayı; Edge’te admin rolü (`ADMIN_EMAILS` + JWT normalizasyonu); footer + `/kvkk` + `/sozlesme`; 24 saat moderasyon metni; mobil ≥44px turu; `npm run build` yeşil.
 
 ## Active Task Board
 ### To Do
@@ -32,6 +32,7 @@ Objective: Google OAuth + PrismaAdapter; Cloudinary yükleme (duyuru kapak + pro
 - [x] Phase 10 / Step 5: `store.ts` / `storeCore.ts` silindi; `log.md` / `state.md` güncellendi; `.env` içinde `AUTH_SECRET`
 - [x] Phase 11: Auth sayfası (Framer Motion Giriş/Kayıt); kayıt `registerWithCredentials`; duyuru kategorileri + hub + `/duyurular/kategori/[slug]`; admin CRUD kategori + dış başvuru alanları; parallax kapak + blog tipografisi; seed (TEKNOFEST/TÜBİTAK/Ideathon vb.) + admin çıktısı; `requireAuthedMemberUser` + başvuruda sahip kontrolü; proje detay JSON-LD; `lucide-react`; `AnnouncementsPublicClient` kaldırıldı
 - [x] Phase 12: `Google` provider + `PrismaAdapter`; giriş sayfası “Google ile devam et”; `next-cloudinary` + `CloudinaryImageField` (admin duyuru kapak, profil foto); `NetworkParticles` Ar-Ge estetiği; `LandingMatchmakingFlow` + `/hakkimizda` ayrımı; `SiteHeader` mobil drawer; `.env.example`; `res.cloudinary.com` remote image
+- [x] Phase 13: `LandingMatchmakingFlow` tek grid; `HeroBackdrop`; `globals.css` palet; Credentials kaldırıldı; `authRole` + `ADMIN_EMAILS`; `AuthPageClient` yalnız Google + onay kutusu; `SiteFooter` + `/kvkk` + `/sozlesme`; moderasyon 24 saat metni; `TeamAdsMarketplace` / `PostTeamAdForm`; `HowItWorks` silindi
 
 ### In Progress
 - (boş)
@@ -108,7 +109,10 @@ Objective: Google OAuth + PrismaAdapter; Cloudinary yükleme (duyuru kapak + pro
 - `src/app/auth/login/page.tsx`
 - `src/lib/authGate.ts`
 - `src/components/home/NetworkParticles.tsx`
-- `src/components/home/HowItWorks.tsx`
+- `src/components/site/SiteFooter.tsx`
+- `src/app/kvkk/page.tsx` / `src/app/sozlesme/page.tsx`
+- `src/lib/authRole.ts`
+- `src/components/home/HeroBackdrop.tsx`
 - `src/lib/projectMappers.ts` (Prisma ↔ UI `TeamAd`)
 - `src/lib/projectQueries.ts` (server-side okuma)
 - `src/actions/projectActions.ts` (`createProject` + `revalidatePath`)

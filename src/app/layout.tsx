@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site/SiteHeader";
+import { SiteFooter } from "@/components/site/SiteFooter";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 
 const geistSans = Geist({
@@ -38,16 +39,12 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(1000px_600px_at_50%_-10%,rgba(255,255,255,0.10),transparent_60%)] dark:bg-[radial-gradient(1000px_600px_at_50%_-10%,rgba(255,255,255,0.06),transparent_60%)]" />
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(1000px_520px_at_50%_-8%,rgba(6,182,212,0.08),transparent_58%),radial-gradient(800px_480px_at_90%_20%,rgba(14,165,233,0.06),transparent_55%)]" />
         <SessionProvider>
           <SiteHeader />
           <main className="flex-1">{children}</main>
+          <SiteFooter />
         </SessionProvider>
-        <footer className="border-t border-white/10 py-10">
-          <div className="mx-auto w-full max-w-6xl px-6 text-sm text-white/60">
-            © {new Date().getFullYear()} Ar-Ge İnovasyon ve Girişimcilik Kulübü
-          </div>
-        </footer>
       </body>
     </html>
   );

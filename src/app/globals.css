@@ -1,14 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a; /* slate-900 */
-  --muted: rgba(15, 23, 42, 0.62);
-  --hairline: rgba(15, 23, 42, 0.12);
-  --surface: rgba(15, 23, 42, 0.03);
-  --primary: #2563eb; /* blue-600 */
+  /* Modern minimalist: anthracite / slate, clean white, cyan–sky accent */
+  --background: #f8fafc;
+  --foreground: #0c1222;
+  --muted: rgba(12, 18, 34, 0.58);
+  --hairline: rgba(15, 23, 42, 0.1);
+  --surface: rgba(15, 23, 42, 0.035);
+  --primary: #0891b2; /* cyan-600 */
   --primary-foreground: #ffffff;
-  --ring: rgba(37, 99, 235, 0.35);
+  --ring: rgba(8, 145, 178, 0.38);
+  --accent-blue: #0ea5e9;
 }
 
 @theme inline {
@@ -39,7 +41,7 @@ body {
 }
 
 ::selection {
-  background: rgba(37, 99, 235, 0.18);
+  background: rgba(8, 145, 178, 0.2);
 }
 
 .prose-custom {
